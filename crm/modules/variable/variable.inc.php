@@ -1,0 +1,90 @@
+<?php
+
+/**
+ * @return This module's revision number.  Each new release should increment
+ * this number.
+ */
+function variable_revision () {
+    return 1;
+}
+
+/**
+ * Install or upgrade this module.
+ * @param $old_revision The last installed revision of this module, or 0 if the
+ *   module has never been installed.
+ */
+function variable_install($old_revision = 0) {
+    global $db_connect;
+    // Create initial database table
+    if ($old_revision < 1) {
+        $sql = '
+            CREATE TABLE IF NOT EXISTS `variable` (
+              `name` varchar(255) NOT NULL,
+              `value` text NOT NULL,
+              PRIMARY KEY (`name`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        ';
+        $res = mysqli_query($db_connect, $sql);
+        if (!$res) crm_error(mysqli_error($res));
+    }
+}
+
+// Utility functions ///////////////////////////////////////////////////////////
+
+/**
+ * Set a variable's value.
+ * @param $name
+ * @param $value
+ */
+function variable_set ($name, $value) {
+    global $db_connect;
+    $esc_name = mysqli_real_escape_string($db_connect, $name);
+    $esc_value = mysqli_real_escape_string($db_connect, $value);
+    
+    // Check if variable exists
+    $sql = "SELECT `value` FROM `variable` WHERE `name`='$esc_name'";
+    $res = mysqli_query($db_connect, $sql);
+    if (!$res) crm_error(mysqli_error($res));
+    
+    if (mysqli_num_rows($res) > 0) {
+        // Update
+        $sql = "
+            UPDATE `variable`
+            SET `value`='$esc_value'
+            WHERE `name`='$esc_name'
+        ";
+        $res = mysqli_query($db_connect, $sql);
+        if (!$res) crm_error(mysqli_error($res));
+    } else {
+        // Insert
+        $sql = "
+            INSERT INTO `variable`
+            (`name`, `value`)
+            VALUES ('$esc_name', '$esc_value')
+        ";
+        $res = mysqli_query($db_connect, $sql);
+        if (!$res) crm_error(mysqli_error($res));
+    }
+}
+
+/**
+ * Get a variable's value.
+ * @param $name
+ * @param $default The value to return if no such variable exists.
+ * @return The value of the variable named $name, or $default if not found.
+ */
+function variable_get ($name, $default) {
+    global $db_connect;
+    $esc_name = mysqli_real_escape_string($db_connect, $name);
+    
+    $sql = "SELECT `value` FROM `variable` WHERE `name`='$esc_name'";
+    $res = mysqli_query($db_connect, $sql);
+    if (!$res) crm_error(mysqli_error($res));
+    
+    $variable = mysqli_fetch_assoc($res);
+    if ($variable) {
+        return $variable['value'];
+    }
+    
+    return $default;
+}
