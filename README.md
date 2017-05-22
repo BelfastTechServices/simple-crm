@@ -46,11 +46,9 @@ eval $(ssh-agent -s); ssh-add .ssh/github_rsa
 
 git clone git@github.com:chris18890/simple-crm.git
 
-cd simple-crm/crm; cp config.sample.inc.php config.inc.php; nano config.inc.php; cd
+cp simple-crm/crm/config.sample.inc.php simple-crm/crm/config.inc.php; nano simple-crm/crm/config.inc.php
+
+sudo cp -r simple-crm/crm/ /var/www/simple-crm; sudo chown www-data -R /var/www
 ```
 
 **if single site, remember to edit $config_base_path back to /crm/**
-
-```
-sudo cp -r simple-crm/crm/ /var/www/simple-crm; sudo chown www-data -R /var/www
-```
