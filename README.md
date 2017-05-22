@@ -6,8 +6,6 @@ simple-crm web app
 ```
 sudo nano /etc/apache2/sites-available/simple-crm-ssl.conf; sudo a2ensite simple-crm-ssl; sudo service apache2 restart
 
-cd; sudo add-apt-repository ppa:certbot/certbot; sudo apt-get update; sudo apt-get install python-certbot-apache
-
 sudo certbot --apache -d simple-crm.belfasttechservices.co.uk -d www.simple-crm.belfasttechservices.co.uk --agree-tos --renew-by-default --no-redirect
 ```
 
