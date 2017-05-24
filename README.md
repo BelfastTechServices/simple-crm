@@ -1,14 +1,6 @@
 simple-crm web app
 ============
 
-# Setup - multiple domains/ssl sites
-
-```
-sudo nano /etc/apache2/sites-available/simple-crm-ssl.conf; sudo a2ensite simple-crm-ssl; sudo service apache2 restart
-
-sudo certbot --apache -d simple-crm.belfasttechservices.co.uk -d www.simple-crm.belfasttechservices.co.uk --agree-tos --renew-by-default --no-redirect
-```
-
 # install
 
 ## set up MySQL database
@@ -50,3 +42,13 @@ sudo cp -r simple-crm/crm/ /var/www/simple-crm; sudo chown www-data -R /var/www
 ```
 
 **if single site, remember to edit $config_base_path back to /crm/**
+
+# Setup - multiple domains/ssl sites
+
+```
+nano simple-crm/simple-crm-ssl.conf
+
+sudo cp simple-crm/simple-crm-ssl.conf /etc/apache2/sites-available/simple-crm-ssl.conf; sudo a2ensite simple-crm-ssl; sudo service apache2 restart
+
+sudo certbot --apache -d simple-crm.belfasttechservices.co.uk -d www.simple-crm.belfasttechservices.co.uk --agree-tos --renew-by-default --no-redirect
+```
