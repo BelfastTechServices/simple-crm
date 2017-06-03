@@ -152,7 +152,7 @@ function contact_data ($opts = array()) {
 function contact_save ($contact) {
     global $db_connect;
     $fields = array(
-        'cid', 'firstName', 'middleName', 'lastName', 'email', 'phone', 'emergencyName', 'emergencyPhone'
+        'cid', 'firstName', 'middleName', 'lastName', 'email', 'phone'
     );
     $escaped = array();
     foreach ($fields as $field) {
@@ -540,13 +540,6 @@ function contact_page (&$page_data, $page_name) {
             page_set_title($page_data, 'Contacts');
             // Add view tab
             if (user_access('contact_view')) {
-                $opts = array(
-                    'show_export'=>true
-                    , 'exclude'=>array(
-                        'emergencyName',
-                        'emergencyPhone'
-                    )
-                );
                 $view = theme('table', crm_get_table('contact', $opts));
                 page_add_content_top($page_data, $view, 'View');
             }
