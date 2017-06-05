@@ -60,22 +60,22 @@ p {
 
 /* General table styles */
 
-table.seltzer-table {
+table.simple-crm-table {
     border-collapse: collapse;
     margin: 0.5em;
 }
-table.seltzer-table th {
+table.simple-crm-table th {
     background: #0099cb;
     color: white;
 }
-table.seltzer-table td, table.seltzer-table th {
+table.simple-crm-table td, table.simple-crm-table th {
     border-left: solid 1px #0099cb;
     border-right: solid 1px #0099cb;
     border-spacing: 0;
     padding: 0.2em 0.5em;
     text-align: left;
 }
-table.seltzer-table tr.subhead td {
+table.simple-crm-table tr.subhead td {
     background: #99dce6;
     background: #7bcfeb;
     border-bottom: none;
@@ -83,17 +83,17 @@ table.seltzer-table tr.subhead td {
     font-weight: normal;
     border-top: solid 1px #0099cb;
 }
-table.seltzer-table tr.subhead td a {
+table.simple-crm-table tr.subhead td a {
     color: white;
     font-weight: normal;
 }
-table.seltzer-table tr.even td, table.seltzer-table tr.even th {
+table.simple-crm-table tr.even td, table.simple-crm-table tr.even th {
     background-color: #eeeeff;
 }
-table.seltzer-table tr:last-child td {
+table.simple-crm-table tr:last-child td {
     border-bottom: solid 1px #0099cb;
 }
-table.seltzer-table tr:first-child td {
+table.simple-crm-table tr:first-child td {
     border-top: solid 1px #0099cb;
 }
 /* Report styles */

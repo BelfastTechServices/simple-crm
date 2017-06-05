@@ -57,7 +57,7 @@ function theme_table ($table_id, $opts = NULL) {
     if (!empty($table['id'])) {
         $output .= ' id="' . $table['id'] . '"';
     }
-    $class = "seltzer-table";
+    $class = "simple-crm-table";
     if (!empty($table['class'])) {
         $class .= ' ' . $table['class'];
     }
@@ -224,7 +224,7 @@ function theme_table_vertical ($table_name, $opts = NULL) {
     if (!empty($table['id'])) {
         $output .= ' id="' . $table['id'] . '"';
     }
-    $class = "seltzer-table";
+    $class = "simple-crm-table";
     if (!empty($table['class'])) {
         $class .= " " . $table['class'];
     }
