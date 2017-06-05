@@ -5,7 +5,7 @@
  * this number.
  */
 function profile_picture_revision () {
-    return 1;
+    return 2;
 }
 
 // Installation functions //////////////////////////////////////////////////////
@@ -18,6 +18,9 @@ function profile_picture_revision () {
 function profile_picture_install ($old_revision = 0) {
     global $db_connect;
     if ($old_revision < 1) {
+        // There is nothing to install. Do nothing
+    }
+    if ($old_revision < 2) {
         // Create a table to associate pictures with a CID
         $sql = '
             CREATE TABLE IF NOT EXISTS `profile_picture` (
