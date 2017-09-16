@@ -16,7 +16,7 @@ function member_install($old_revision = 0) {
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
         ';
         $res = mysqli_query($db_connect, $sql);
-        if (!$res) die(mysqli_error($res));
+        if (!$res) crm_error(mysqli_error($res));
         // Create default permissions
         $roles = array(
             '1' => 'authenticated'
@@ -32,7 +32,7 @@ function member_install($old_revision = 0) {
                 foreach ($default_perms[$role] as $perm) {
                     $sql = "INSERT INTO `role_permission` (`rid`, `permission`) VALUES ('$rid', '$perm')";
                     $res = mysqli_query($db_connect, $sql);
-                    if (!$res) die(mysqli_error($res));
+                    if (!$res) crm_error(mysqli_error($res));
                 }
             }
         }
