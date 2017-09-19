@@ -67,7 +67,9 @@ function command_member_add () {
     $contact['user'] = $user;
     
     // Add member fields
-    $member = array('member' => $member);
+    $member = array(
+        'member' => $member
+    );
     $contact['member'] = $member;
     
     // Save to database
@@ -209,7 +211,9 @@ function command_member_import () {
         $contact['user'] = $user;
         
         // Add member fields
-        $member = array('member' => $member);
+        $member = array(
+            'member' => $member
+        );
         $contact['member'] = $member;
         
         // Save to database

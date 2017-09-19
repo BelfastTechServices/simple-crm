@@ -45,7 +45,7 @@ function member_add_form () {
  * @return The form structure.
 */
 function member_filter_form () {
-
+    
     // Available filters    
     $filters = array(
         'all' => 'All',
@@ -85,7 +85,6 @@ function member_filter_form () {
             )
         )
     );
-    
     return $form;
 }
 

@@ -118,6 +118,7 @@ function member_contact_api ($contact, $op) {
         return $contact;
     }
     $esc_cid = mysqli_real_escape_string($db_connect, $contact['cid']);
+    
     switch ($op) {
         case 'create':
             // Add member
