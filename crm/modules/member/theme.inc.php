@@ -80,8 +80,11 @@ function theme_member_created_email ($cid) {
     $output .= "Name: $name<br/>\n";
     $output .= "Email: $contact[email]<br/>\n";
     $output .= "Phone: $contact[phone]\n</p>\n";
-    $output .= "<p>Entered by: $adminName</p>\n";
-    
+    if (user_id()){
+        $output .= "<p>Entered by: $adminName</p>\n";
+    } else {
+        $output .= "<p>User self-registered</p>\n";
+    }
     return $output;
 }
 
