@@ -32,7 +32,7 @@ function theme_register_form () {
 function register_form () {
     
     // Start with contact form
-    $form = crm_get_form('contact');
+    $form = crm_get_form('member_add');
     
     // Generate default start date, first of current month
     $start = date("Y-m-d");
@@ -40,19 +40,6 @@ function register_form () {
     // Change form command
     $form['command'] = 'register';
     $form['submit'] = 'Register';
-    
-    // Add member data
-    $form['fields'][] = array(
-        'type' => 'fieldset',
-        'label' => 'User Info',
-        'fields' => array(
-            array(
-                'type' => 'text',
-                'label' => 'Username',
-                'name' => 'username'
-            )
-        )
-    );
     
     return $form;
 }
