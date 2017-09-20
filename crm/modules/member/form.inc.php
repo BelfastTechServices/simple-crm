@@ -24,13 +24,13 @@ function member_add_form () {
     
     // Add member data
     $form['fields'][] = array(
-        'type' => 'fieldset',
-        'label' => 'User Info',
-        'fields' => array(
+        'type' => 'fieldset'
+        , 'label' => 'User Info'
+        , 'fields' => array(
             array(
-                'type' => 'text',
-                'label' => 'Username',
-                'name' => 'username'
+                'type' => 'text'
+                , 'label' => 'Username'
+                , 'name' => 'username'
             )
         )
     );
