@@ -91,12 +91,17 @@ function command_register () {
         , 'email' => $_POST['email']
         , 'phone' => $_POST['phone']
     );
+    
     // Add user fields
     $user = array('username' => $username);
     $contact['user'] = $user;
+    
     // Add member fields
-    $member = array('member' => $member);
+    $member = array(
+        'member' => $membership
+    );
     $contact['member'] = $member;
+    
     // Save to database
     $contact = contact_save($contact);
     

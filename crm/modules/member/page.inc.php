@@ -53,7 +53,7 @@ function member_page (&$page_data, $page_name, $options) {
                 return;
             }
             
-            // Add plan and role tabs
+            // Add role tab
             if (user_access('member_edit')) {
                 $roles = theme('form', crm_get_form('user_role_edit', $cid));
                 page_add_content_top($page_data, $roles, 'Roles');
