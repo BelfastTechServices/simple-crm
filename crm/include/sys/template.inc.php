@@ -22,7 +22,7 @@ function template_render ($name, $vars = array()) {
     if (isset($vars['type'])) {
         $filename = path_to_theme() . '/' . "$name-$vars[type]" . '.tpl.php';
     } else {
-        // TODO This should be a fallback, not an else -Ed 2013-01-29
+        // TODO This should be a fallback, not an else
         $filename = path_to_theme() . '/' . $name . '.tpl.php';
     }
     ob_start();
