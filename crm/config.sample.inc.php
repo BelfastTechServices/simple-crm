@@ -18,7 +18,7 @@ $config_org_name = 'Belfast Tech Services';
 $config_org_website = 'www.belfasttechservices.co.uk';
 
 // The From: address to use when sending email to members
-$config_email_from = 'simple-crm@belfasttechservices.co.uk';
+$config_email_from = 'customerservice@belfasttechservices.co.uk';
 
 // The email address to notify when a user is created
 $config_email_to = 'chris@belfasttechservices.co.uk';
