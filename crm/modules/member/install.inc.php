@@ -25,7 +25,7 @@ function member_install($old_revision = 0) {
         );
         $default_perms = array(
             'member' => array('member_view')
-            , 'webAdmin' => array('member_view', 'member_add', 'member_edit', 'member_delete', 'member_list')
+            , 'webAdmin' => array('member_list', 'member_view', 'member_add', 'member_edit', 'member_delete')
         );
         foreach ($roles as $rid => $role) {
             if (array_key_exists($role, $default_perms)) {
