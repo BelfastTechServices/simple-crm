@@ -38,6 +38,24 @@ function theme_member_filter_form () {
 }
 
 /**
+ * @return The themed html for an active member email report.
+*/
+function theme_member_email_report ($opts) {
+    $output = '<div class="member-email-report">';
+    $title = '';
+    if (isset($opts['filter']) && isset($opts['filter']['active'])) {
+        $title = $opts['filter']['active'] ? 'Active ' : 'Lapsed ';
+    }
+    $title .= 'Email Report';
+    $output .= "<h2>$title</h2>";
+    $output .= '<textarea rows="10" cols="80">';
+    $output .= member_email_report($opts);
+    $output .= '</textarea>';
+    $output .= '</div>';
+    return $output;
+}
+
+/**
  * Return the themed html for a contact's name.
  *
  * @param $cid The cid of the contact.
