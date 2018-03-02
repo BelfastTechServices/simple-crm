@@ -840,10 +840,16 @@ function command_set_password () {
     global $db_connect;
     global $esc_post;
     
+    // Check permissions
+    if ((user_id() != $esc_post['cid']) && !user_access('user_edit')) {
+        error_register('Current user does not have permission: user_edit');
+        return crm_url("contact&cid=$esc_post[cid]");
+    }
+    
     // Check that passwords match
     if ($_POST['password'] != $_POST['confirm']) {
         error_register('Passwords do not match');
-        return crm_url("contact&cid=$esc_cid");
+        return crm_url("contact&cid=$esc_post[cid]");
     }
     
     // Get user id
