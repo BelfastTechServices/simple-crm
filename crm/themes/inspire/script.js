@@ -54,7 +54,7 @@ var showTab = function (hash) {
         $('fieldset#tab-view').show();
         $('ul.page-nav li a[href="#tab-view"]').addClass('active');
     }
-}
+};
 
 // Add autocomplete functionality to input fields
 var initAutocomplete = function () {
