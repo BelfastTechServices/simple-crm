@@ -25,6 +25,11 @@
     print 'Please ensure the information we have on file for you is complete and accurate.';
     print '<br /><br />';
     
+    if((!empty($config_address1)) && (!empty($config_address2)) && (!empty($config_address3)) && (!empty($config_town_city)) && (!empty($config_zipcode))) {
+        print 'Our address is ' . "$config_address1" . ", " . "$config_address2" . ", " . "$config_address3" . ", " . "$config_town_city" . ", " . "$config_zipcode";
+    }
+    print '<br /><br />';
+    
     print 'If you have any additional questions, please contact: <a href="mailto:' . "$config_email_from" . '">' . "$config_email_from" . '</a> or visit the website at <a href="' . "$config_org_website" . '">' . "$config_org_website";
     ?>
 </p>
