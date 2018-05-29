@@ -36,6 +36,10 @@ $config_host = $_SERVER['SERVER_NAME'];
 // The url path of the app directory
 $config_base_path = '/';
 
+// Github username & repo used to construct footer
+$config_github_username = 'chris18890';
+$config_github_repo = 'simple-crm';
+
 // The name of the theme you want to use
 // (currently there is only one, "inspire".)
 $config_theme = "inspire";
