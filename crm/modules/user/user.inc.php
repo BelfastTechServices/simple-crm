@@ -36,9 +36,9 @@ function user_install ($old_revision = 0) {
         if (mysqli_num_rows(mysqli_query($db_connect, "SHOW TABLES LIKE 'user'")) == 0) {
             $sql = '
                 CREATE TABLE IF NOT EXISTS `resetPassword` (
-                  `cid` mediumint(8) unsigned NOT NULL,
-                  `code` varchar(40) NOT NULL,
-                  PRIMARY KEY (`cid`)
+                  `cid` mediumint(8) unsigned NOT NULL
+                  , `code` varchar(40) NOT NULL
+                  , PRIMARY KEY (`cid`)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
             ';
             $res = mysqli_query($db_connect, $sql);
@@ -46,9 +46,9 @@ function user_install ($old_revision = 0) {
             
             $sql = '
                 CREATE TABLE IF NOT EXISTS `role` (
-                  `rid` mediumint(9) NOT NULL AUTO_INCREMENT,
-                  `name` varchar(255) NOT NULL,
-                  PRIMARY KEY (`rid`)
+                  `rid` mediumint(9) NOT NULL AUTO_INCREMENT
+                  , `name` varchar(255) NOT NULL
+                  , PRIMARY KEY (`rid`)
                 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
             ';
             $res = mysqli_query($db_connect, $sql);
@@ -56,9 +56,9 @@ function user_install ($old_revision = 0) {
             
             $sql = '
                 CREATE TABLE IF NOT EXISTS `role_permission` (
-                  `rid` mediumint(8) unsigned NOT NULL,
-                  `permission` varchar(255) NOT NULL,
-                  PRIMARY KEY (`rid`,`permission`)
+                  `rid` mediumint(8) unsigned NOT NULL
+                  , `permission` varchar(255) NOT NULL
+                  , PRIMARY KEY (`rid`,`permission`)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
             ';
             $res = mysqli_query($db_connect, $sql);
@@ -66,11 +66,11 @@ function user_install ($old_revision = 0) {
             
             $sql = "
                 CREATE TABLE IF NOT EXISTS `user` (
-                  `cid` mediumint(11) unsigned NOT NULL,
-                  `username` varchar(32) NOT NULL,
-                  `hash` varchar(40) NOT NULL DEFAULT '',
-                  `salt` varchar(16) NOT NULL DEFAULT '',
-                  PRIMARY KEY (`cid`)
+                  `cid` mediumint(11) unsigned NOT NULL
+                  , `username` varchar(32) NOT NULL
+                  , `hash` varchar(40) NOT NULL DEFAULT ''
+                  , `salt` varchar(16) NOT NULL DEFAULT ''
+                  , PRIMARY KEY (`cid`)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
             ";
             $res = mysqli_query($db_connect, $sql);
@@ -78,9 +78,9 @@ function user_install ($old_revision = 0) {
             
             $sql = '
                 CREATE TABLE IF NOT EXISTS `user_role` (
-                  `cid` mediumint(8) unsigned NOT NULL,
-                  `rid` mediumint(8) unsigned NOT NULL,
-                  PRIMARY KEY (`cid`,`rid`)
+                  `cid` mediumint(8) unsigned NOT NULL
+                  , `rid` mediumint(8) unsigned NOT NULL
+                  , PRIMARY KEY (`cid`,`rid`)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
             ';
             $res = mysqli_query($db_connect, $sql);
@@ -375,18 +375,19 @@ function user_save ($user) {
             INSERT INTO `user`
             (`username`, `cid`)
             VALUES
-            ('$esc_name', '$esc_cid')";
+            ('$esc_name', '$esc_cid')
+        ";
         $res = mysqli_query($db_connect, $sql);
         if (!$res) crm_error(mysqli_error($res));
     } else {
         // The user already exists, update it
         $sql = "
             UPDATE `user`
-            SET `username`='$esc_name',
-            `hash`='$esc_hash',
-            `salt`='$esc_salt'
+            SET `username`='$esc_name'
+            , `hash`='$esc_hash'
+            , `salt`='$esc_salt'
             WHERE `cid`='$esc_cid'
-            ";
+        ";
         $res = mysqli_query($db_connect, $sql);
         if (!$res) crm_error(mysqli_error($res));
     }
@@ -594,7 +595,7 @@ function user_reset_password_url ($username) {
         SELECT * FROM `user`
         INNER JOIN `contact` ON `user`.`cid`=`contact`.`cid`
         WHERE `user`.`username`='$esc_username'
-        ";
+    ";
     $res = mysqli_query($db_connect, $sql);
     if (!$res) crm_error(mysqli_error($res));
     $row = mysqli_fetch_assoc($res);
@@ -615,7 +616,8 @@ function user_reset_password_url ($username) {
         REPLACE INTO `resetPassword`
         (`cid`, `code`)
         VALUES
-        ('$esc_cid', '$esc_code')";
+        ('$esc_cid', '$esc_code')
+    ";
     $res = mysqli_query($db_connect, $sql);
     
     // Generate reset url
@@ -822,7 +824,7 @@ function command_reset_password_confirm () {
         SET `hash`='$esc_hash'
         , `salt`='$esc_salt'
         WHERE `cid`='$esc_cid'
-        ";
+    ";
     $res = mysqli_query($db_connect, $sql);
     if (!$res) { crm_error(mysqli_error($res)); }
     
@@ -870,7 +872,7 @@ function command_set_password () {
         SET `hash`='$esc_hash'
         , `salt`='$esc_salt'
         WHERE `cid`='$esc_cid'
-        ";
+    ";
     $res = mysqli_query($db_connect, $sql);
     if (!$res) { crm_error(mysqli_error($res)); }
     message_register("The user's password has been reset");
@@ -986,29 +988,29 @@ function command_user_role_update () {
 */
 function login_form () {
     $form = array(
-        'type' => 'form',
-        'method' => 'post',
-        'command' => 'login',
-        'fields' => array(
+        'type' => 'form'
+        , 'method' => 'post'
+        , 'command' => 'login'
+        , 'fields' => array(
             array(
-                'type' => 'fieldset',
-                'label' => 'Log in',
-                'fields' => array(
+                'type' => 'fieldset'
+                , 'label' => 'Log in'
+                , 'fields' => array(
                     array(
-                        'type' => 'text',
-                        'label' => 'Username or Email',
-                        'name' => 'username',
-                        'class' => 'focus'
-                    ),
-                    array(
-                        'type' => 'password',
-                        'label' => 'Password',
-                        'name' => 'password'
-                    ),
-                    array(
-                        'type' => 'submit',
-                        'name' => 'submitted',
-                        'value' => 'Log in'
+                        'type' => 'text'
+                        , 'label' => 'Username or Email'
+                        , 'name' => 'username'
+                        , 'class' => 'focus'
+                    )
+                    , array(
+                        'type' => 'password'
+                        , 'label' => 'Password'
+                        , 'name' => 'password'
+                    )
+                    , array(
+                        'type' => 'submit'
+                        , 'name' => 'submitted'
+                        , 'value' => 'Log in'
                     )
                 )
             )
@@ -1022,23 +1024,23 @@ function login_form () {
 */
 function user_reset_password_form () {
     $form = array(
-        'type' => 'form',
-        'method' => 'post',
-        'command' => 'reset_password',
-        'fields' => array(
+        'type' => 'form'
+        , 'method' => 'post'
+        , 'command' => 'reset_password'
+        , 'fields' => array(
             array(
-                'type' => 'fieldset',
-                'label' => 'Reset password',
-                'fields' => array(
+                'type' => 'fieldset'
+                , 'label' => 'Reset password'
+                , 'fields' => array(
                     array(
-                        'type' => 'text',
-                        'label' => 'Username or Email',
-                        'name' => 'username'
-                    ),
-                    array(
-                        'type' => 'submit',
-                        'name' => 'submitted',
-                        'value' => 'Send Email'
+                        'type' => 'text'
+                        , 'label' => 'Username or Email'
+                        , 'name' => 'username'
+                    )
+                    , array(
+                        'type' => 'submit'
+                        , 'name' => 'submitted'
+                        , 'value' => 'Send Email'
                     )
                 )
             )
@@ -1054,31 +1056,31 @@ function user_reset_password_form () {
 function user_reset_password_confirm_form ($code) {
     
     $form = array(
-        'type' => 'form',
-        'method' => 'post',
-        'command' => 'reset_password_confirm',
-        'hidden' => array(
+        'type' => 'form'
+        , 'method' => 'post'
+        , 'command' => 'reset_password_confirm'
+        , 'hidden' => array(
             'code' => $code
-        ),
-        'fields' => array(
+        )
+        , 'fields' => array(
             array(
-                'type' => 'fieldset',
-                'label' => 'Change password',
-                'fields' => array(
+                'type' => 'fieldset'
+                , 'label' => 'Change password'
+                , 'fields' => array(
                     array(
-                        'type' => 'password',
-                        'label' => 'Password',
-                        'name' => 'password'
-                    ),
-                    array(
-                        'type' => 'password',
-                        'label' => 'Confirm',
-                        'name' => 'confirm'
-                    ),
-                    array(
-                        'type' => 'submit',
-                        'name' => 'submitted',
-                        'value' => 'Change password'
+                        'type' => 'password'
+                        , 'label' => 'Password'
+                        , 'name' => 'password'
+                    )
+                    , array(
+                        'type' => 'password'
+                        , 'label' => 'Confirm'
+                        , 'name' => 'confirm'
+                    )
+                    , array(
+                        'type' => 'submit'
+                        , 'name' => 'submitted'
+                        , 'value' => 'Change password'
                     )
                 )
             )
@@ -1092,31 +1094,31 @@ function user_reset_password_confirm_form ($code) {
 */
 function user_set_password_form ($cid) {
     $form = array(
-        'type' => 'form',
-        'method' => 'post',
-        'command' => 'set_password',
-        'hidden' => array(
+        'type' => 'form'
+        , 'method' => 'post'
+        , 'command' => 'set_password'
+        , 'hidden' => array(
             'cid' => $cid
-        ),
-        'fields' => array(
+        )
+        , 'fields' => array(
             array(
-                'type' => 'fieldset',
-                'label' => 'Change password',
-                'fields' => array(
+                'type' => 'fieldset'
+                , 'label' => 'Change password'
+                , 'fields' => array(
                     array(
-                        'type' => 'password',
-                        'label' => 'Password',
-                        'name' => 'password'
-                    ),
-                    array(
-                        'type' => 'password',
-                        'label' => 'Confirm',
-                        'name' => 'confirm'
-                    ),
-                    array(
-                        'type' => 'submit',
-                        'name' => 'submitted',
-                        'value' => 'Change password'
+                        'type' => 'password'
+                        , 'label' => 'Password'
+                        , 'name' => 'password'
+                    )
+                    , array(
+                        'type' => 'password'
+                        , 'label' => 'Confirm'
+                        , 'name' => 'confirm'
+                    )
+                    , array(
+                        'type' => 'submit'
+                        , 'name' => 'submitted'
+                        , 'value' => 'Change password'
                     )
                 )
             )
@@ -1153,9 +1155,9 @@ function user_permissions_form () {
         foreach ($roles as $role) {
             $checked = in_array($permission, $role['permissions']);
             $row[] = array(
-                'type' => 'checkbox',
-                'name' => "$permission-$role[name]",
-                'checked' => $checked
+                'type' => 'checkbox'
+                , 'name' => "$permission-$role[name]"
+                , 'checked' => $checked
             );
         }
         $rows[] = $row;
@@ -1172,9 +1174,9 @@ function user_permissions_form () {
                 , 'rows' => $rows
             )
             , array(
-                'type' => 'submit',
-                'name' => 'submitted',
-                'value' => 'Update'
+                'type' => 'submit'
+                , 'name' => 'submitted'
+                , 'value' => 'Update'
             )
         )
     );
@@ -1204,26 +1206,26 @@ function user_role_edit_form ($cid) {
             continue;
         }
         $fields[] = array(
-            'type' => 'checkbox',
-            'label' => $role,
-            'name' => $role,
-            'checked' => in_array($role, $user['roles'])
+            'type' => 'checkbox'
+            , 'label' => $role
+            , 'name' => $role
+            , 'checked' => in_array($role, $user['roles'])
         );
     }
     $fields[] = array(
-        'type' => 'submit',
-        'name' => 'submitted',
-        'value' => 'Update'
+        'type' => 'submit'
+        , 'name' => 'submitted'
+        , 'value' => 'Update'
     );
     
     $form = array(
-        'type' => 'form',
-        'method' => 'post',
-        'command' => 'user_role_update',
-        'hidden' => array(
+        'type' => 'form'
+        , 'method' => 'post'
+        , 'command' => 'user_role_update'
+        , 'hidden' => array(
             'cid' => $cid
-        ),
-        'fields' => $fields
+        )
+        , 'fields' => $fields
     );
     return $form;
 }

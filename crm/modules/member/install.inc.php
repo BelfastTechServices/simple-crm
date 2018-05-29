@@ -11,8 +11,8 @@ function member_install($old_revision = 0) {
         // Create member table
         $sql = '
             CREATE TABLE IF NOT EXISTS `member` (
-              `cid` mediumint(8) unsigned NOT NULL,
-              PRIMARY KEY (`cid`)
+              `cid` mediumint(8) unsigned NOT NULL
+              , PRIMARY KEY (`cid`)
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
         ';
         $res = mysqli_query($db_connect, $sql);

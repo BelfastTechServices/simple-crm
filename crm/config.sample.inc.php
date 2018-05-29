@@ -49,10 +49,10 @@ $config_theme = "inspire";
 
 // Base modules
 $config_modules = array(
-    "contact",
-    "user",
-    "variable",
-    "member"
+    "contact"
+    , "user"
+    , "variable"
+    , "member"
 );
 
 // Optional modules, uncomment to enable

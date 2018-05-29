@@ -42,8 +42,8 @@ function member_filter_form () {
     
     // Available filters    
     $filters = array(
-        'all' => 'All',
-        'active' => 'Active'
+        'all' => 'All'
+        , 'active' => 'Active'
     );
     
     // Default filter
@@ -56,24 +56,24 @@ function member_filter_form () {
     }
     
     $form = array(
-        'type' => 'form',
-        'method' => 'get',
-        'command' => 'member_filter',
-        'hidden' => $hidden,
-        'fields' => array(
+        'type' => 'form'
+        , 'method' => 'get'
+        , 'command' => 'member_filter'
+        , 'hidden' => $hidden
+        , 'fields' => array(
             array(
-                'type' => 'fieldset',
-                'label' => 'Filter',
-                'fields' => array(
+                'type' => 'fieldset'
+                , 'label' => 'Filter'
+                , 'fields' => array(
                     array(
-                        'type' => 'select',
-                        'name' => 'filter',
-                        'options' => $filters,
-                        'selected' => $selected
-                    ),
-                    array(
-                        'type' => 'submit',
-                        'value' => 'Filter'
+                        'type' => 'select'
+                        , 'name' => 'filter'
+                        , 'options' => $filters
+                        , 'selected' => $selected
+                    )
+                    , array(
+                        'type' => 'submit'
+                        , 'value' => 'Filter'
                     )
                 )
             )

@@ -28,9 +28,9 @@ function member_table ($opts = NULL) {
     
     // Create table structure
     $table = array(
-        'id' => '',
-        'class' => '',
-        'rows' => array()
+        'id' => ''
+        , 'class' => ''
+        , 'rows' => array()
     );
     
     // Add columns
@@ -119,10 +119,10 @@ function member_contact_table ($opts) {
     
     // Initialize table
     $table = array(
-        "id" => '',
-        "class" => '',
-        "rows" => array(),
-        "columns" => array()
+        "id" => ''
+        , "class" => ''
+        , "rows" => array()
+        , "columns" => array()
     );
     
     // Add columns

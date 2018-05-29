@@ -70,4 +70,3 @@ function member_page (&$page_data, $page_name, $options) {
             break;
     }
 }
-

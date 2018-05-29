@@ -53,11 +53,11 @@ function member_data ($opts = array()) {
                 , 'lastName' => $row['lastName']
                 , 'email' => $row['email']
                 , 'phone' => $row['phone']
-            ),
-            'user' => array(
-                'cid' => $row['cid'],
-                'username' => $row['username'],
-                'hash' => $row['hash']
+            )
+            , 'user' => array(
+                'cid' => $row['cid']
+                , 'username' => $row['username']
+                , 'hash' => $row['hash']
             )
         );
         
