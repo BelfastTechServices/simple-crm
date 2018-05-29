@@ -20,7 +20,7 @@ $config_org_website = 'www.belfasttechservices.co.uk';
 // The currency code for dealing with payments, can be GBP, USD, or EUR
 $config_currency_code = 'GBP';
 
-// The From: address to use when sending email to members
+// The From: address to use when sending email to users
 $config_email_from = 'customerservice@belfasttechservices.co.uk';
 
 // The email address to notify when a user is created
