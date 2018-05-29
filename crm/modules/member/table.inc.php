@@ -139,3 +139,85 @@ function member_contact_table ($opts) {
     
     return $table;
 }
+
+/**
+ * Return a table structure representing members' details.
+ *
+ * @param $opts Options to pass to member_data().
+ * @return The table structure.
+*/
+function member_details_table ($opts = NULL) {
+    
+    // Ensure user is allowed to view members
+    if (!user_access('member_view')) {
+        return NULL;
+    }
+    
+    // Determine settings
+    $export = false;
+    foreach ($opts as $option => $value) {
+        switch ($option) {
+            case 'export':
+                $export = $value;
+                break;
+        }
+    }
+    
+    // Get member data
+    $members = member_data($opts);
+    
+    // Create table structure
+    $table = array(
+        'id' => ''
+        , 'class' => ''
+        , 'rows' => array()
+    );
+    
+    // Add columns
+    $table['columns'] = array();
+    
+    if (user_access('member_view')) {
+        $table['columns'][] = array('title'=>'Address 1','class'=>'');
+        $table['columns'][] = array('title'=>'Address 2','class'=>'');
+        $table['columns'][] = array('title'=>'Address 3','class'=>'');
+        $table['columns'][] = array('title'=>'Town/City','class'=>'');
+        $table['columns'][] = array('title'=>'Zip/Postal Code','class'=>'');
+    }
+    // Add ops column
+    if (!$export && (user_access('member_edit') || user_access('member_delete'))) {
+        $table['columns'][] = array('title'=>'Ops','class'=>'');
+    }
+    
+    // Loop through member data
+    foreach ($members as $member) {
+        
+        // Add user data
+        $row = array();
+        if (user_access('member_view')) {
+            $row[] = $member['member']['address1'];
+            $row[] = $member['member']['address2'];
+            $row[] = $member['member']['address3'];
+            $row[] = $member['member']['town_city'];
+            $row[] = $member['member']['zipcode'];
+        }
+        
+        // Construct ops array
+        $ops = array();
+        
+        // Add edit op
+        if (user_access('member_edit')) {
+            $ops[] = '<a href='. crm_url('contact&cid=' . $member['cid'] . '&tab=edit') . '>edit</a> ';
+        }
+        
+        // Add ops row
+        if (!$export && (user_access('member_edit'))) {
+            $row[] = join(' ', $ops);
+        }
+        
+        // Add row to table
+        $table['rows'][] = $row;
+    }
+    
+    // Return table
+    return $table;
+}

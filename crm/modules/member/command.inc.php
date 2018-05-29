@@ -107,6 +107,11 @@ function command_member_add () {
     // Add member fields
     $member = array(
         'member' => $member
+        , 'address1' => $_POST['address1']
+        , 'address2' => $_POST['address2']
+        , 'address3' => $_POST['address3']
+        , 'town_city' => $_POST['town_city']
+        , 'zipcode' => $_POST['zipcode']
     );
     $contact['member'] = $member;
     
@@ -128,6 +133,39 @@ function command_member_add () {
     $confirm_url = user_reset_password_url($contact['user']['username']);
     $content = theme('member_welcome_email', $contact['user']['cid'], $confirm_url);
     mail($_POST['email'], "Welcome to $config_org_name", $content, $headers);
+    
+    return crm_url("contact&cid=$esc_cid");
+}
+
+/**
+ * Handle member edit request.
+ *
+ * @return The url to display when complete.
+ */
+function command_member_edit () {
+    global $db_connect;
+    global $esc_post;
+    
+    $esc_cid = mysqli_real_escape_string($db_connect, $_POST['cid']);
+    $esc_address1 = mysqli_real_escape_string($db_connect, $_POST['address1']);
+    $esc_address2 = mysqli_real_escape_string($db_connect, $_POST['address2']);
+    $esc_address3 = mysqli_real_escape_string($db_connect, $_POST['address3']);
+    $esc_town_city = mysqli_real_escape_string($db_connect, $_POST['town_city']);
+    $esc_zipcode = mysqli_real_escape_string($db_connect, $_POST['zipcode']);
+    $member_data = crm_get_data('member', array('cid'=>$esc_cid));
+    $member = $member_data[0]['member'];
+    
+    // Add member fields
+    $member = array(
+        'cid'=> $esc_cid
+        , 'address1' => $esc_address1
+        , 'address2' => $esc_address2
+        , 'address3' => $esc_address3
+        , 'town_city' => $esc_town_city
+        , 'zipcode' => $esc_zipcode
+    );
+    // Save to database
+    $member = member_save($member);
     
     return crm_url("contact&cid=$esc_cid");
 }
@@ -289,6 +327,11 @@ function command_member_import () {
         // Add member fields
         $member = array(
             'member' => $member
+            , 'address1' => $row['address1']
+            , 'address2' => $row['address2']
+            , 'address3' => $row['address3']
+            , 'town_city' => $row['town_city']
+            , 'zipcode' => $row['zipcode']
         );
         $contact['member'] = $member;
         

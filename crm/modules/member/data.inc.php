@@ -14,6 +14,7 @@ function member_data ($opts = array()) {
     $sql = "
         SELECT
         `member`.`cid`, `firstName`, `middleName`, `lastName`, `email`, `phone`,
+        `address1`, `address2`, `address3`, `town_city`, `zipcode`,
         `username`, `hash`
         FROM `member`
         LEFT JOIN `contact` ON `member`.`cid`=`contact`.`cid`
@@ -58,6 +59,13 @@ function member_data ($opts = array()) {
                 'cid' => $row['cid']
                 , 'username' => $row['username']
                 , 'hash' => $row['hash']
+            )
+            , 'member' => array(
+                'address1' => $row['address1']
+                , 'address2' => $row['address2']
+                , 'address3' => $row['address3']
+                , 'town_city' => $row['town_city']
+                , 'zipcode' => $row['zipcode']
             )
         );
         
@@ -118,6 +126,11 @@ function member_contact_api ($contact, $op) {
         return $contact;
     }
     $esc_cid = mysqli_real_escape_string($db_connect, $contact['cid']);
+    $esc_address1 = mysqli_real_escape_string($db_connect, $contact['member']['address1']);
+    $esc_address2 = mysqli_real_escape_string($db_connect, $contact['member']['address2']);
+    $esc_address3 = mysqli_real_escape_string($db_connect, $contact['member']['address3']);
+    $esc_town_city = mysqli_real_escape_string($db_connect, $contact['member']['town_city']);
+    $esc_zipcode = mysqli_real_escape_string($db_connect, $contact['member']['zipcode']);
     
     switch ($op) {
         case 'create':
@@ -125,9 +138,9 @@ function member_contact_api ($contact, $op) {
             $member = $contact['member'];
             $sql = "
                 INSERT INTO `member`
-                (`cid`)
+                (`cid`, `address1`, `address2`, `address3`, `town_city`, `zipcode`)
                 VALUES
-                ('$esc_cid')
+                ('$esc_cid', '$esc_address1', '$esc_address2', '$esc_address3', '$esc_town_city', '$esc_zipcode')
             ";
             $res = mysqli_query($db_connect, $sql);
             if (!$res) crm_error(mysqli_error($res));
@@ -158,6 +171,37 @@ function member_contact_api ($contact, $op) {
             break;
     }
     return $contact;
+}
+
+/**
+ * Saves a member.
+ */
+function member_save ($member) {
+    global $db_connect;
+    $fields = array(
+        'cid', 'address1', 'address2', 'address3', 'town_city', 'zipcode'
+    );
+    $escaped = array();
+    foreach ($fields as $field) {
+        $escaped[$field] = mysqli_real_escape_string($db_connect, $member[$field]);
+    }
+    if (isset($member['cid'])) {
+        // Update member
+        $sql = "
+            UPDATE `member`
+            SET `address1`='$escaped[address1]'
+                , `address2`='$escaped[address2]'
+                , `address3`='$escaped[address3]'
+                , `town_city`='$escaped[town_city]'
+                , `zipcode`='$escaped[zipcode]'
+            WHERE `cid`='$escaped[cid]'
+        ";
+        $res = mysqli_query($db_connect, $sql);
+        if (!$res) crm_error(mysqli_error($res));
+        if (mysqli_affected_rows() < 1) {
+            return null;
+        }
+    }
 }
 
 /**

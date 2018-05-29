@@ -56,6 +56,16 @@ function theme_member_email_report ($opts) {
 }
 
 /**
+ * Return the themed html for a member details table.
+ *
+ * @param $opts The options to pass to member_data().
+ * @return The themed html string.
+ */
+function theme_member_details_table ($opts = NULL) {
+    return theme('table_vertical', crm_get_table('member_details', $opts));
+}
+
+/**
  * Return the themed html for a contact's name.
  *
  * @param $cid The cid of the contact.

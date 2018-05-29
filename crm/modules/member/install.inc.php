@@ -12,6 +12,11 @@ function member_install($old_revision = 0) {
         $sql = '
             CREATE TABLE IF NOT EXISTS `member` (
               `cid` mediumint(8) unsigned NOT NULL
+              , `address1` varchar(255) NOT NULL
+              , `address2` varchar(255) NOT NULL
+              , `address3` varchar(255) NOT NULL
+              , `town_city` varchar(255) NOT NULL
+              , `zipcode` varchar(255) NOT NULL
               , PRIMARY KEY (`cid`)
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
         ';

@@ -137,6 +137,11 @@ function command_register_member () {
     // Add member fields
     $member = array(
         'member' => $member
+        , 'address1' => $_POST['address1']
+        , 'address2' => $_POST['address2']
+        , 'address3' => $_POST['address3']
+        , 'town_city' => $_POST['town_city']
+        , 'zipcode' => $_POST['zipcode']
     );
     $contact['member'] = $member;
     
