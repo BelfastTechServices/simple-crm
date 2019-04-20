@@ -66,10 +66,14 @@ $config_modules[] = "profile_picture";
 // User self-registration
 $config_modules[] = "register";
 
+// Email list management
+$config_modules[] = "email_list";
+
 // Links to show in the main menu
 $config_links = array(
     '<front>' => 'Home'
     , 'members' => 'Members'
+    , 'email_lists' => 'Email Lists'
     , 'permissions' => 'Permissions'
     , 'upgrade' => 'Upgrade'
 );
