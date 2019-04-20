@@ -9,17 +9,17 @@ function member_install($old_revision = 0) {
     global $db_connect;
     if ($old_revision < 1) {
         // Create member table
-        $sql = '
+        $sql = "
             CREATE TABLE IF NOT EXISTS `member` (
-              `cid` mediumint(8) unsigned NOT NULL
-              , `address1` varchar(255) NOT NULL
-              , `address2` varchar(255) NOT NULL
-              , `address3` varchar(255) NOT NULL
-              , `town_city` varchar(255) NOT NULL
-              , `zipcode` varchar(255) NOT NULL
-              , PRIMARY KEY (`cid`)
+                `cid` mediumint(8) unsigned NOT NULL
+                , `address1` varchar(255) NOT NULL
+                , `address2` varchar(255) NOT NULL
+                , `address3` varchar(255) NOT NULL
+                , `town_city` varchar(255) NOT NULL
+                , `zipcode` varchar(255) NOT NULL
+                , PRIMARY KEY (`cid`)
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ';
+        ";
         $res = mysqli_query($db_connect, $sql);
         if (!$res) crm_error(mysqli_error($res));
         // Create default permissions
