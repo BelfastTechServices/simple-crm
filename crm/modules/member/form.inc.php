@@ -4,18 +4,14 @@
 
 /**
  * @return The form structure for adding a member.
-*/
+ */
 function member_add_form () {
-    
     // Start with contact form
     $form = crm_get_form('contact');
-    
     // Generate default start date, first of current month
     $start = date("Y-m-d");
-    
     // Change form command
     $form['command'] = 'member_add';
-    
     // Add member data
     $form['fields'][] = array(
         'type' => 'fieldset'
@@ -64,9 +60,8 @@ function member_add_form () {
 
 /**
  * @return The form structure for editing a member.
-*/
+ */
 function member_edit_form ($cid) {
-    
     // Create form
     if ($cid) {
         $memb_data = crm_get_data('member', array('cid'=>$cid));
@@ -82,7 +77,6 @@ function member_edit_form ($cid) {
         , 'fields' => array()
         , 'submit' => 'Update'
     );
-    
     // Edit member data
     $form['fields'][] = array(
         'type' => 'fieldset'
@@ -127,26 +121,21 @@ function member_edit_form ($cid) {
 
 /**
  * Return the form structure for a member filter.
- * 
  * @return The form structure.
-*/
+ */
 function member_filter_form () {
-    
     // Available filters    
     $filters = array(
         'all' => 'All'
         , 'active' => 'Active'
     );
-    
     // Default filter
     $selected = empty($_SESSION['member_filter_option']) ? 'all' : $_SESSION['member_filter_option'];
-    
     // Construct hidden fields to pass GET params
     $hidden = array();
     foreach ($_GET as $key => $val) {
         $hidden[$key] = $val;
     }
-    
     $form = array(
         'type' => 'form'
         , 'method' => 'get'
@@ -178,7 +167,7 @@ function member_filter_form () {
 
 /**
  * @return the form structure for a member import form.
-*/
+ */
 function member_import_form () {
     return array(
         'type' => 'form'

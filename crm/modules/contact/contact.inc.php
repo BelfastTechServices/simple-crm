@@ -37,17 +37,19 @@ function contact_permissions () {
 function contact_install ($old_revision = 0) {
     global $db_connect;
     if ($old_revision < 1) {
-        $sql = '
+        $sql = "
             CREATE TABLE IF NOT EXISTS `contact` (
-              `cid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT
-              , `firstName` varchar(255) NOT NULL
-              , `middleName` varchar(255) NOT NULL
-              , `lastName` varchar(255) NOT NULL
-              , `email` varchar(255) NOT NULL
-              , `phone` varchar(32) NOT NULL
-              , PRIMARY KEY (`cid`)
+                `cid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT
+                , `firstName` varchar(255) NOT NULL
+                , `middleName` varchar(255) NOT NULL
+                , `lastName` varchar(255) NOT NULL
+                , `email` varchar(255) NOT NULL
+                , `phone` varchar(32) NOT NULL
+                , `emergencyName` varchar(255) NOT NULL
+                , `emergencyPhone` varchar(16) NOT NULL
+                , PRIMARY KEY (`cid`)
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-        ';
+        ";
         $res = mysqli_query($db_connect, $sql);
         if (!$res) crm_error(mysqli_error($res));
     }
@@ -57,7 +59,6 @@ function contact_install ($old_revision = 0) {
 
 /**
  * Return data for one or more contacts.
- * 
  * @param $opts An associative array of options, possible keys are:
  *   'cid' A cid or array of cids to return contacts for.
  *   'filter' An array mapping filter names to filter values
@@ -79,11 +80,15 @@ function contact_data ($opts = array()) {
                     $terms[] = "'" . mysqli_real_escape_string($db_connect, $cid) . "'";
                 }
                 $esc_list = '(' . implode(',', $terms) . ')';
-                $sql .= " AND `cid` IN $esc_list";
+                $sql .= "
+                    AND `cid` IN $esc_list
+                ";
             }
         } else {
             $esc_cid = mysqli_real_escape_string($db_connect, $opts['cid']);
-            $sql .= " AND `cid`='$esc_cid'";
+            $sql .= "
+                AND `cid`='$esc_cid'
+            ";
         }
     }
     // Add filters
@@ -104,12 +109,25 @@ function contact_data ($opts = array()) {
                     }
                     // Set where clauses based on number of name segments given
                     if (sizeof($names) === 1) {
-                        $sql .= "AND (`firstName` LIKE '%$names[0]%' OR `middleName` LIKE '%$names[0]%' OR `lastName` LIKE '%$names[0]%') ";
+                        $sql .= "
+                            AND (
+                                `firstName` LIKE '%$names[0]%'
+                                OR `middleName` LIKE '%$names[0]%'
+                                OR `lastName` LIKE '%$names[0]%'
+                            )
+                        ";
                     } else if (sizeof($names) === 2) {
                         $sql .= "
                             AND (
-                                (`firstName` LIKE '%$names[0]%' AND (`middleName` LIKE '%$names[1]%' OR `lastName` LIKE '%$names[1]%'))
-                                OR (`middleName` LIKE '%$names[0]%' AND `lastName` LIKE '%$names[1]%')
+                                    (
+                                        `firstName` LIKE '%$names[0]%'
+                                        AND (`middleName` LIKE '%$names[1]%'
+                                        OR `lastName` LIKE '%$names[1]%')
+                                    )
+                                OR (
+                                        `middleName` LIKE '%$names[0]%'
+                                        AND `lastName` LIKE '%$names[1]%'
+                                    )
                             )
                         ";
                     } else if (sizeof($names) === 3) {
@@ -208,7 +226,10 @@ function contact_delete ($cid) {
     // Notify other modules the contact is being deleted
     $contact = module_invoke_api('contact', $contact, 'delete');
     // Remove the contact from the database
-    $sql = "DELETE FROM `contact` WHERE `cid`='$esc_cid'";
+    $sql = "
+        DELETE FROM `contact`
+        WHERE `cid`='$esc_cid'
+    ";
     $res = mysqli_query($db_connect, $sql);
     if (!$res) crm_error(mysqli_error($res));
     message_register('Deleted contact info for: ' . theme('contact_name', $contact));
@@ -238,14 +259,13 @@ function contact_name_autocomplete ($fragment) {
 
 /**
  * Return a table structure representing contacts.
- *
  * @param $opts Options to pass to contact_data().
  * @return The table structure.
-*/
+ */
 function contact_table ($opts = array()) {
     // Ensure user is allowed to view contacts
     if (!user_access('contact_view')) {
-        return NULL;
+        return null;
     }
     // Create table structure
     $table = array();
@@ -281,12 +301,10 @@ function contact_table ($opts = array()) {
     // Loop through contact data and add rows to the table
     $table['rows'] = array();
     foreach ($contact_data as $contact) {
-        
         $row = array();
         if ((user_access('contact_view') && $contact['cid'] == user_id()) || user_access('contact_list')) {
             // Construct name
             $name_link = theme('contact_name', $contact, true);
-            
             // Add cells
             if ($export) {
                 $row[] = $contact['cid'];
@@ -298,30 +316,24 @@ function contact_table ($opts = array()) {
             }
             $row[] = $contact['email'];
             $row[] = $contact['phone'];
-            
             // Construct ops array
             $ops = array();
-            
             // Add edit op
             if (user_access('contact_edit')) {
                 $ops[] = '<a href=' . crm_url('contact&cid=' . $contact['cid'] . '&tab=edit') . '>edit</a> ';
             }
-            
             // Add delete op
             if (user_access('contact_delete')) {
                 $ops[] = '<a href=' . crm_url('delete&type=contact&amp;id=' . $contact['cid']) . '>delete</a>';
             }
-            
             // Add ops row
             if ($show_ops && !$export && (user_access('contact_edit') || user_access('contact_delete'))) {
                 $row[] = join(' ', $ops);
             }
-            
             // Add row to table
             $table['rows'][] = $row;
         }
     }
-    
     // Return table
     return $table;
 }
@@ -332,10 +344,9 @@ function contact_table ($opts = array()) {
  * Return the form structure for adding or editing a contact.  If $opts['cid']
  * is specified, an edit form will be returned, otherwise an add form will be
  * returned.
- * 
  * @param $opts An associative array of options, possible keys are:
  * @return The form structure.
-*/
+ */
 function contact_form ($opts = array()) {
     // Create form
     $form = array(
@@ -403,10 +414,9 @@ function contact_form ($opts = array()) {
 
 /**
  * Return the form structure to delete a contact.
- *
  * @param $cid The cid of the contact to delete.
  * @return The form structure.
-*/
+ */
 function contact_delete_form ($cid) {
     // Ensure user is allowed to delete contacts
     if (!user_access('contact_delete')) {
@@ -450,7 +460,6 @@ function contact_delete_form ($cid) {
 
 /**
  * Handle contact add request.
- *
  * @return The url to display when complete.
  */
 function command_contact_add () {
@@ -475,7 +484,6 @@ function command_contact_add () {
 
 /**
  * Handle contact update request.
- *
  * @return The url to display on completion.
  */
 function command_contact_update () {
@@ -504,7 +512,6 @@ function command_contact_update () {
 
 /**
  * Handle contact delete request.
- *
  * @return The url to display on completion.
  */
 function command_contact_delete () {
@@ -533,10 +540,9 @@ function contact_page_list () {
 
 /**
  * Page hook.  Adds contact module content to a page before it is rendered.
- *
  * @param &$page_data Reference to data about the page being rendered.
  * @param $page_name The name of the page being rendered.
-*/
+ */
 function contact_page (&$page_data, $page_name) {
     switch ($page_name) {
         case 'contacts':
@@ -596,12 +602,10 @@ function contact_page (&$page_data, $page_name) {
 
 /**
  * Theme a contact's name.
- * 
  * @param $contact The contact data structure or cid.
  * @param $link True if the name should be a link (default: false).
  * @param $path The path that should be linked to.  The cid will always be added
  *   as a parameter.
- *
  * @return the name string.
  */
 function theme_contact_name ($contact, $link = false, $path = 'contact') {
@@ -621,5 +625,3 @@ function theme_contact_name ($contact, $link = false, $path = 'contact') {
     }
     return $name;
 }
-
-?>

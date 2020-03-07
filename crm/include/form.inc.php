@@ -2,11 +2,10 @@
 
 /**
  * Return the form structure for a delete confirmation form.
- *
  * @param $type The type of element to delete.
  * @param $id The id of the element to delete.
  * @return The form structure.
-*/
+ */
 function delete_form ($type, $id) {
     $function = $type . '_delete_form';
     if (function_exists($function)) {
@@ -17,15 +16,13 @@ function delete_form ($type, $id) {
 
 /**
  * Return the form structure for a filtering form.
- *
  * @param $filters Array of filter keys and labels.
  * @param $default The default filter.
  * @param $action URL to submit to.
  * @param $get HTTP GET params to pass.
  * @return The form structure.
-*/
+ */
 function filter_form ($filters, $selected, $action, $get) {
-    
     // Construct hidden fields to pass GET params
     $hidden = array();
     foreach ($get as $key => $val) {
@@ -33,7 +30,6 @@ function filter_form ($filters, $selected, $action, $get) {
             $hidden[$key] = $val;
         }
     }
-    
     $form = array(
         'type' => 'form'
         , 'method' => 'get'
@@ -58,8 +54,5 @@ function filter_form ($filters, $selected, $action, $get) {
             )
         )
     );
-    
     return $form;
 }
-
-?>

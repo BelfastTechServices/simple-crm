@@ -1,6 +1,5 @@
 
 /* Site-wide tag styles */
-
 body {
     margin: 0;
     padding: 0;
@@ -9,18 +8,15 @@ body {
     font-size: 0.875em;
     overflow-y: scroll;
 }
-
 h1 {
     margin: 1em 0 0 0;
     font-size: 1.33em; /* 12->16pt */
 }
-
 fieldset {
     margin: 0.5em;
     padding: 0.5em 1em;
     border: solid 1px #0099cb;
 }
-
 fieldset.form-row {
     display: block;
     margin: 0.5em 0;
@@ -28,18 +24,15 @@ fieldset.form-row {
     border: none;
     clear: both;
 }
-
 fieldset.float {
     float: left;
     clear: none;
 }
-
 label {
     display: block;
     margin: 0;
     padding: 0;
 }
-
 a {
     font-weight: bold;
     color: #0099cb;
@@ -47,19 +40,16 @@ a {
 a:focus {
     outline: none;
 }
-
 p {
     margin: 1em 0.5em;
 }
 
 /* Site-wide class styles */
-
 .hidden {
     display: none;
 }
 
 /* General table styles */
-
 table.simple-crm-table {
     border-collapse: collapse;
     margin: 0.5em;
@@ -96,34 +86,30 @@ table.simple-crm-table tr:last-child td {
 table.simple-crm-table tr:first-child td {
     border-top: solid 1px #0099cb;
 }
+
 /* Report styles */
 
 /* Datepicker styles */
-
 .ui-datepicker {
     background-color: #eeeeee;
 }
 
 /* General form styles */
-
 .form-row-checkbox input {
     float: left;
     margin-right: 0.5em;
 }
-
 .form-row-checkbox label {
     float: left;
 }
 
 /* Layout */
-
 .container {
     position: relative;
     max-width: 960px;
     margin: 0 auto;
     padding: 0;
 }
-
 .header ul.nav {
     display: block;
     overflow: hidden;
@@ -133,13 +119,11 @@ table.simple-crm-table tr:first-child td {
     border-top: solid 2px #0099cb;
     border-bottom: solid 2px #0099cb;
 }
-
 .header ul.nav li {
     display: block;
     float: left;
     padding: 4px 2px;
 }
-
 .header ul.nav li a {
     display: block;
     float: left;
@@ -152,13 +136,11 @@ table.simple-crm-table tr:first-child td {
 .header ul.nav li a:hover {
     background: #eeeeff;
 }
-
 .login-status {
     position: absolute;
     top: 4px;
     right: 8px;
 }
-
 ul.page-nav {
     display: block;
     overflow: hidden;
@@ -185,17 +167,14 @@ ul.page-nav li a:hover {
 ul.page-nav li a.active {
     background: #eeeeff;
 }
-
 fieldset.tab {
     border: none;
     margin: 0 0 1em 0;
     padding: 0;
 }
-
 fieldset.tab > legend {
     display: none;
 }
-
 .footer {
     border-top: solid 2px #0099cb;
     padding: 1em 0 0.5em 0;

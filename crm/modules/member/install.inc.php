@@ -35,7 +35,12 @@ function member_install($old_revision = 0) {
         foreach ($roles as $rid => $role) {
             if (array_key_exists($role, $default_perms)) {
                 foreach ($default_perms[$role] as $perm) {
-                    $sql = "INSERT INTO `role_permission` (`rid`, `permission`) VALUES ('$rid', '$perm')";
+                    $sql = "
+                        INSERT INTO `role_permission`
+                        (`rid`, `permission`)
+                        VALUES
+                        ('$rid', '$perm')
+                    ";
                     $res = mysqli_query($db_connect, $sql);
                     if (!$res) crm_error(mysqli_error($res));
                 }

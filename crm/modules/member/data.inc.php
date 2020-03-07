@@ -2,12 +2,11 @@
 
 /**
  * Return data for one or more members.
- *
  * @param $opts An associative array of options, possible keys are:
  *   'cid' If specified, return a member (or members if array) with the given id,
  *   'filter' An array mapping filter names to filter values
  * @return An array with each element representing a member.
-*/ 
+ */
 function member_data ($opts = array()) {
     global $db_connect;
     // Query database
@@ -29,18 +28,24 @@ function member_data ($opts = array()) {
                 $terms[] = $term;
             }
             $esc_list = "(" . implode(',', $terms) .")";
-            $sql .= " AND `member`.`cid` IN $esc_list ";
+            $sql .= "
+                AND `member`.`cid` IN $esc_list
+            ";
         } else {
             $esc_cid = mysqli_real_escape_string($db_connect, $opts['cid']);
-            $sql .= " AND `member`.`cid`='$esc_cid'";
+            $sql .= "
+                AND `member`.`cid`='$esc_cid'
+            ";
         }
     }
-    $sql .= " GROUP BY `member`.`cid` ";
-    $sql .= " ORDER BY `lastName`, `firstName`, `middleName` ASC ";
-    
+    $sql .= "
+        GROUP BY `member`.`cid`
+    ";
+    $sql .= "
+        ORDER BY `lastName`, `firstName`, `middleName` ASC
+    ";
     $res = mysqli_query($db_connect, $sql);
     if (!$res) crm_error(mysqli_error($res));
-    
     // Store data
     $members = array();
     $row = mysqli_fetch_assoc($res);
@@ -68,11 +73,9 @@ function member_data ($opts = array()) {
                 , 'zipcode' => $row['zipcode']
             )
         );
-        
         $members[] = $member;
         $row = mysqli_fetch_assoc($res);
     }
-    
     // Return data
     return $members;
 }
@@ -131,7 +134,6 @@ function member_contact_api ($contact, $op) {
     $esc_address3 = mysqli_real_escape_string($db_connect, $contact['member']['address3']);
     $esc_town_city = mysqli_real_escape_string($db_connect, $contact['member']['town_city']);
     $esc_zipcode = mysqli_real_escape_string($db_connect, $contact['member']['zipcode']);
-    
     switch ($op) {
         case 'create':
             // Add member
@@ -146,12 +148,15 @@ function member_contact_api ($contact, $op) {
             if (!$res) crm_error(mysqli_error($res));
             $contact['member']['cid'] = $contact['cid'];
             // Add role entry
-            $sql = "SELECT `rid` FROM `role` WHERE `name`='member'";
+            $sql = "
+                SELECT `rid`
+                FROM `role`
+                WHERE `name`='member'
+            ";
             $res = mysqli_query($db_connect, $sql);
             if (!$res) crm_error(mysqli_error($res));
             $row = mysqli_fetch_assoc($res);
             $esc_rid = mysqli_real_escape_string($db_connect, $row['rid']);
-            
             if ($row) {
                 $sql = "
                     INSERT INTO `user_role`
@@ -211,7 +216,10 @@ function member_save ($member) {
 function member_delete ($cid) {
     global $db_connect;
     $esc_cid = mysqli_real_escape_string($db_connect, $cid);
-    $sql = "DELETE FROM `member` WHERE `cid`='$esc_cid'";
+    $sql = "
+        DELETE FROM `member`
+        WHERE `cid`='$esc_cid'
+    ";
     $res = mysqli_query($db_connect, $sql);
     if (!$res) crm_error(mysqli_error($res));
     message_register("Deleted member info for: " . theme('contact_name', $esc_cid));
@@ -219,13 +227,12 @@ function member_delete ($cid) {
 
 /**
  * Return data for one or more contacts.  Use contact_data() instead.
- * 
  * @param $opts An associative array of options, possible keys are:
  *   'cid' If specified returns the corresponding member (or members for an array);
  *   'filter' An array mapping filter names to filter values
  * @return An array with each element representing a contact.
  * @deprecated
-*/ 
+ */ 
 function member_contact_data ($opts = array()) {
     return contact_data($opts);
 }
