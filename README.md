@@ -7,13 +7,10 @@ simple-crm web app
 
 ```
 sudo mysql -u root -p
-
 CREATE DATABASE `simple-crm` CHARACTER SET utf8 COLLATE utf8_general_ci;
 CREATE USER 'simple-crm'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
 GRANT ALL PRIVILEGES ON `simple-crm` . * TO 'simple-crm'@'localhost';
-
 FLUSH PRIVILEGES;
-
 quit
 ```
 
@@ -33,11 +30,8 @@ git clone https://github.com/chris18890/simple-crm.git
 
 ```
 eval $(ssh-agent -s); ssh-add .ssh/github_rsa
-
 git clone git@github.com:chris18890/simple-crm.git
-
 cp simple-crm/crm/config.sample.inc.php simple-crm/crm/config.inc.php; nano simple-crm/crm/config.inc.php
-
 sudo cp -r simple-crm/crm/ /var/www/simple-crm; sudo chown www-data -R /var/www
 ```
 
@@ -47,8 +41,6 @@ sudo cp -r simple-crm/crm/ /var/www/simple-crm; sudo chown www-data -R /var/www
 
 ```
 nano simple-crm/simple-crm-ssl.conf
-
 sudo cp simple-crm/simple-crm-ssl.conf /etc/apache2/sites-available/simple-crm-ssl.conf; sudo a2ensite simple-crm-ssl; sudo service apache2 restart
-
 sudo certbot --apache -d simple-crm.belfasttechservices.co.uk -d www.simple-crm.belfasttechservices.co.uk --agree-tos --renew-by-default --no-redirect
 ```
