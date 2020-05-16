@@ -20,12 +20,6 @@ quit
 sudo rm -rf simple-crm /var/www/simple-crm
 ```
 
-### https url
-
-```
-git clone https://github.com/chris18890/simple-crm.git
-```
-
 ### git url
 
 ```
