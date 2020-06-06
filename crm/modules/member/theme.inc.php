@@ -1,40 +1,6 @@
 <?php
 
 /**
- * Return the themed html for a table of members.
- * @param $opts Options to pass to member_data().
- * @return The themed html string.
- */
-function theme_member_table ($opts = null) {
-    return theme('table', crm_get_table('member', $opts));
-}
-
-/**
- * Return the themed html for a single member's contact info.
- * @param $opts The options to pass to member_contact_data().
- * @return The themed html string.
- */
-function theme_member_contact_table ($opts = null) {
-    return theme('table_vertical', crm_get_table('member_contact', $opts));
-}
-
-/**
- * Returned the themed html for edit member form.
- * @param $cid The cid of the member to edit.
- * @return The themed html.
- */
-function theme_member_edit_form ($cid) {
-    return theme('form', crm_get_form('member_edit', $cid));
-}
-
-/**
- * @return The themed html for a member filter form.
- */
-function theme_member_filter_form () {
-    return theme('form', crm_get_form('member_filter'));
-}
-
-/**
  * @return The themed html for an active member email report.
  */
 function theme_member_email_report ($opts) {
@@ -50,15 +16,6 @@ function theme_member_email_report ($opts) {
     $output .= '</textarea>';
     $output .= '</div>';
     return $output;
-}
-
-/**
- * Return the themed html for a member details table.
- * @param $opts The options to pass to member_data().
- * @return The themed html string.
- */
-function theme_member_details_table ($opts = null) {
-    return theme('table_vertical', crm_get_table('member_details', $opts));
 }
 
 /**
@@ -86,7 +43,7 @@ function theme_member_contact_name ($cid) {
  */
 function theme_member_created_email ($cid) {
     // Get info on the logged in user
-    $data = member_contact_data(array('cid'=>user_id()));
+    $data = contact_data(array('cid'=>user_id()));
     $admin = $data[0];
     $adminName = theme_contact_name($admin['cid']);
     // Get info on member
@@ -98,7 +55,7 @@ function theme_member_created_email ($cid) {
     $output .= "Name: $name<br/>\n";
     $output .= "Email: $contact[email]<br/>\n";
     $output .= "Phone: $contact[phone]\n</p>\n";
-    if (user_id()){
+    if (user_id()) {
         $output .= "<p>Entered by: $adminName</p>\n";
     } else {
         $output .= "<p>User self-registered</p>\n";

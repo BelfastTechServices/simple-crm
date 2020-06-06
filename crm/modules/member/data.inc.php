@@ -224,15 +224,3 @@ function member_delete ($cid) {
     if (!$res) crm_error(mysqli_error($res));
     message_register("Deleted member info for: " . theme('contact_name', $esc_cid));
 }
-
-/**
- * Return data for one or more contacts.  Use contact_data() instead.
- * @param $opts An associative array of options, possible keys are:
- *   'cid' If specified returns the corresponding member (or members for an array);
- *   'filter' An array mapping filter names to filter values
- * @return An array with each element representing a contact.
- * @deprecated
- */ 
-function member_contact_data ($opts = array()) {
-    return contact_data($opts);
-}

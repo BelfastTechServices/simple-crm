@@ -47,7 +47,6 @@ function member_table ($opts = null) {
     }
     // Loop through member data
     foreach ($members as $member) {
-        
         // Add user data
         $row = array();
         if ((user_access('member_view') && $member['contact']['cid'] == user_id()) || user_access('member_list')) {
@@ -84,38 +83,6 @@ function member_table ($opts = null) {
         }
     }
     // Return table
-    return $table;
-}
-
-/**
- * Return a table structure representing contact info.
- * @param $opts Options to pass to member_contact_data().
- * @return The table structure.
- */
-function member_contact_table ($opts) {
-    // Get contact data
-    $data = member_contact_data($opts);
-    $contact = $data[0];
-    if (empty($contact) || count($contact) < 1) {
-        return array();
-    }
-    // Initialize table
-    $table = array(
-        "id" => ''
-        , "class" => ''
-        , "rows" => array()
-        , "columns" => array()
-    );
-    // Add columns
-    $table['columns'][] = array("title"=>'Name', 'class'=>'', 'id'=>'');
-    $table['columns'][] = array("title"=>'Email', 'class'=>'', 'id'=>'');
-    $table['columns'][] = array("title"=>'Phone', 'class'=>'', 'id'=>'');
-    // Add row
-    $table['rows'][] = array(
-        theme('contact_name', $contact)
-        , $contact['email']
-        , $contact['phone']
-    );
     return $table;
 }
 
