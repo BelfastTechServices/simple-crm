@@ -45,8 +45,6 @@ function contact_install ($old_revision = 0) {
                 , `lastName` varchar(255) NOT NULL
                 , `email` varchar(255) NOT NULL
                 , `phone` varchar(32) NOT NULL
-                , `emergencyName` varchar(255) NOT NULL
-                , `emergencyPhone` varchar(16) NOT NULL
                 , PRIMARY KEY (`cid`)
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
         ";
@@ -63,7 +61,7 @@ function contact_install ($old_revision = 0) {
  *   'cid' A cid or array of cids to return contacts for.
  *   'filter' An array mapping filter names to filter values
  * @return An array with each element representing a contact.
-*/ 
+ */
 function contact_data ($opts = array()) {
     global $db_connect;
     // Query database
@@ -95,7 +93,7 @@ function contact_data ($opts = array()) {
     if (isset($opts['filter'])) {
         foreach ($opts['filter'] as $name => $param) {
             switch ($name) {
-                case 'nameLike':                    
+                case 'nameLike':
                     // Split on first comma and create an array of name parts in "first middle last" order
                     $parts = explode(',', $param, 2);
                     $names = array();
