@@ -45,6 +45,9 @@ function contact_install ($old_revision = 0) {
                 , `lastName` varchar(255) NOT NULL
                 , `email` varchar(255) NOT NULL
                 , `phone` varchar(32) NOT NULL
+                , `createdBy` varchar(255) NOT NULL
+                , `createdDate` date NOT NULL
+                , `createdTime` time NOT NULL
                 , PRIMARY KEY (`cid`)
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
         ";
@@ -157,6 +160,9 @@ function contact_data ($opts = array()) {
             , 'lastName' => $row['lastName']
             , 'email' => $row['email']
             , 'phone' => $row['phone']
+            , 'createdBy' => $row['createdBy']
+            , 'createdDate' => $row['createdDate']
+            , 'createdTime' => $row['createdTime']
         );
         $row = mysqli_fetch_assoc($res);
     }
@@ -169,8 +175,15 @@ function contact_data ($opts = array()) {
  */
 function contact_save ($contact) {
     global $db_connect;
+    if (user_id()) {
+            $contact['createdBy'] = user_id();
+    } else {
+            $contact['createdBy'] = "Self-Registration";
+    }
+    $contact['createdDate'] = date("Y-m-d");
+    $contact['createdTime'] = date("H:i:s", time());
     $fields = array(
-        'cid', 'firstName', 'middleName', 'lastName', 'email', 'phone'
+        'cid', 'firstName', 'middleName', 'lastName', 'email', 'phone', 'createdBy', 'createdDate', 'createdTime'
     );
     $escaped = array();
     foreach ($fields as $field) {
@@ -197,9 +210,9 @@ function contact_save ($contact) {
         // Add contact
         $sql = "
             INSERT INTO `contact`
-            (`firstName`,`middleName`,`lastName`,`email`,`phone`)
+            (`firstName`,`middleName`,`lastName`,`email`,`phone`, `createdBy`, `createdDate`, `createdTime`)
             VALUES
-            ('$escaped[firstName]','$escaped[middleName]','$escaped[lastName]','$escaped[email]','$escaped[phone]')
+            ('$escaped[firstName]','$escaped[middleName]','$escaped[lastName]','$escaped[email]','$escaped[phone]','$escaped[createdBy]','$escaped[createdDate]','$escaped[createdTime]')
         ";
         $res = mysqli_query($db_connect, $sql);
         if (!$res) crm_error(mysqli_error($res));
@@ -292,6 +305,11 @@ function contact_table ($opts = array()) {
     }
     $table['columns'][] = array('title'=>'E-Mail','class'=>'');
     $table['columns'][] = array('title'=>'Phone','class'=>'');
+    if (user_access('contact_list')) {
+        $table['columns'][] = array('title'=>'Created By','class'=>'');
+        $table['columns'][] = array('title'=>'Created Date','class'=>'');
+        $table['columns'][] = array('title'=>'Created Time','class'=>'');
+    }
     // Add ops column
     if ($show_ops && !$export && (user_access('contact_edit') || user_access('contact_delete'))) {
         $table['columns'][] = array('title'=>'Ops','class'=>'');
@@ -314,6 +332,15 @@ function contact_table ($opts = array()) {
             }
             $row[] = $contact['email'];
             $row[] = $contact['phone'];
+            if (user_access('contact_list')) {
+                if (!($contact['createdBy'] == "Self-Registration")) {
+                    $row[] = theme('contact_name', $contact['createdBy'], true);
+                } else {
+                    $row[] = $contact['createdBy'];
+                }
+                $row[] = $contact['createdDate'];
+                $row[] = $contact['createdTime'];
+            }
             // Construct ops array
             $ops = array();
             // Add edit op

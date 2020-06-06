@@ -12,7 +12,7 @@ function member_data ($opts = array()) {
     // Query database
     $sql = "
         SELECT
-        `member`.`cid`, `firstName`, `middleName`, `lastName`, `email`, `phone`,
+        `member`.`cid`, `firstName`, `middleName`, `lastName`, `email`, `phone`, `createdBy`, `createdDate`, `createdTime`,
         `address1`, `address2`, `address3`, `town_city`, `zipcode`,
         `username`, `hash`
         FROM `member`
@@ -59,6 +59,9 @@ function member_data ($opts = array()) {
                 , 'lastName' => $row['lastName']
                 , 'email' => $row['email']
                 , 'phone' => $row['phone']
+                , 'createdBy' => $row['createdBy']
+                , 'createdDate' => $row['createdDate']
+                , 'createdTime' => $row['createdTime']
             )
             , 'user' => array(
                 'cid' => $row['cid']
