@@ -38,6 +38,7 @@ function member_table ($opts = null) {
         } else {
             $table['columns'][] = array('title'=>'Name','class'=>'');
         }
+        $table['columns'][] = array('title'=>'Role(s)','class'=>'');
         $table['columns'][] = array('title'=>'E-Mail','class'=>'');
         $table['columns'][] = array('title'=>'Phone','class'=>'');
         $table['columns'][] = array('title'=>'Created By','class'=>'');
@@ -56,6 +57,10 @@ function member_table ($opts = null) {
             // Construct name
             $contact = $member['contact'];
             $name_link = theme('contact_name', $contact, true);
+            // Construct role info
+            $data = user_data(array('cid'=>$contact['cid']));
+            $user = $data[0];
+            $role = implode(", ", $user['roles']);
             // Add cells
             if ($export) {
                 $row[] = $member['contact']['cid'];
@@ -65,6 +70,7 @@ function member_table ($opts = null) {
             } else {
                 $row[] = $name_link;
             }
+            $row[] = $role;
             $row[] = $member['contact']['email'];
             $row[] = $member['contact']['phone'];
             if (!($member['contact']['createdBy'] == "Self-Registration")) {
