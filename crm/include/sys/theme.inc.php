@@ -4,9 +4,8 @@
  * @return the path to the theme folder without leading or trailing slashes.
  */
 function path_to_theme() {
-    global $config_theme;
-    if (strlen($config_theme) > 0) {
-        return "themes/$config_theme";
+    if (strlen(get_theme()) > 0) {
+        return "themes/" . get_theme();
     } else {
         return 'themes/inspire';
     }
@@ -14,7 +13,7 @@ function path_to_theme() {
 
 /**
  * Map theme calls to appropriate theme handler.
- * At least one parmaeter is required, namely the element being themed.
+ * At least one parameter is required, namely the element being themed.
  * Additional parameters will be passed on to the theme handler.
  * @param $element The element to theme.
  * @return The themed html string for the specified element.

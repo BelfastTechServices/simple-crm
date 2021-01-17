@@ -36,12 +36,10 @@ function template_render ($name, $vars = array()) {
  * @param $vars The previously set variables.
  */
 function template_preprocess ($vars) {
-    global $config_org_name;
-    global $config_base_path;
     $vars['title'] = title();
-    $vars['org_name'] = $config_org_name;
-    $vars['base_path'] = $config_base_path;
-    $vars['hostname'] = $_SERVER['SERVER_NAME'];
+    $vars['org_name'] = get_org_name();
+    $vars['base_path'] = base_path();
+    $vars['hostname'] = get_host();
     return $vars;
 }
 
@@ -50,8 +48,6 @@ function template_preprocess ($vars) {
  * @param $vars The previously set variables.
  */
 function template_preprocess_page ($vars) {
-    global $config_org_name;
-    global $config_base_path;
     $vars['scripts'] = theme('scripts');
     $vars['stylesheets'] = theme('stylesheets');
     $vars['header'] = theme('header');
