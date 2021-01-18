@@ -82,5 +82,6 @@ $config_links = array(
     , 'user_metas' => 'User Meta Data'
     , 'email_lists' => 'Email Lists'
     , 'permissions' => 'Permissions'
+    , 'global_options' => 'Global Options'
     , 'upgrade' => 'Upgrade'
 );

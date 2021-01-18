@@ -5,7 +5,8 @@
  */
 function base_path () {
     global $config_base_path;
-    return $config_base_path;
+    $variable_base_path = variable_get('base_path', $config_base_path);
+    return $variable_base_path;
 }
 
 /**
@@ -20,7 +21,8 @@ function path () {
  */
 function title () {
     global $config_site_title;
-    return $config_site_title;
+    $variable_site_title = variable_get('site_title', $config_site_title);
+    return $variable_site_title;
 }
 
 /**
@@ -91,7 +93,8 @@ function crm_version() {
  */
 function github_username () {
     global $config_github_username;
-    return $config_github_username;
+    $variable_github_username = variable_get('github_username', $config_github_username);
+    return $variable_github_username;
 }
 
 /**
@@ -99,7 +102,8 @@ function github_username () {
  */
 function github_repo () {
     global $config_github_repo;
-    return $config_github_repo;
+    $variable_github_repo = variable_get('github_repo', $config_github_repo);
+    return $variable_github_repo;
 }
 
 /**
@@ -107,7 +111,8 @@ function github_repo () {
  */
 function protocol_security () {
     global $config_protocol_security;
-    return $config_protocol_security;
+    $variable_protocol_security = variable_get('protocol_security', $config_protocol_security);
+    return $variable_protocol_security;
 }
 
 /**
@@ -115,7 +120,8 @@ function protocol_security () {
  */
 function get_host () {
     global $config_host;
-    return $config_host;
+    $variable_host = variable_get('host', $config_host);
+    return $variable_host;
 }
 
 /**
@@ -123,7 +129,8 @@ function get_host () {
  */
 function get_org_name () {
     global $config_org_name;
-    return $config_org_name;
+    $variable_org_name = variable_get('org_name', $config_org_name);
+    return $variable_org_name;
 }
 
 /**
@@ -131,7 +138,8 @@ function get_org_name () {
  */
 function get_org_website () {
     global $config_org_website;
-    return $config_org_website;
+    $variable_org_website = variable_get('org_website', $config_org_website);
+    return $variable_org_website;
 }
 
 /**
@@ -139,7 +147,8 @@ function get_org_website () {
  */
 function get_currency_code () {
     global $config_currency_code;
-    return $config_currency_code;
+    $variable_currency_code = variable_get('currency_code', $config_currency_code);
+    return $variable_currency_code;
 }
 
 /**
@@ -147,7 +156,8 @@ function get_currency_code () {
  */
 function get_email_from () {
     global $config_email_from;
-    return $config_email_from;
+    $variable_email_from = variable_get('email_from', $config_email_from);
+    return $variable_email_from;
 }
 
 /**
@@ -155,7 +165,8 @@ function get_email_from () {
  */
 function get_email_to () {
     global $config_email_to;
-    return $config_email_to;
+    $variable_email_to = variable_get('email_to', $config_email_to);
+    return $variable_email_to;
 }
 
 /**
@@ -163,7 +174,8 @@ function get_email_to () {
  */
 function get_address1 () {
     global $config_address1;
-    return $config_address1;
+    $variable_address1 = variable_get('address1', $config_address1);
+    return $variable_address1;
 }
 
 /**
@@ -171,7 +183,8 @@ function get_address1 () {
  */
 function get_address2 () {
     global $config_address2;
-    return $config_address2;
+    $variable_address2 = variable_get('address2', $config_address2);
+    return $variable_address2;
 }
 
 /**
@@ -179,7 +192,8 @@ function get_address2 () {
  */
 function get_address3 () {
     global $config_address3;
-    return $config_address3;
+    $variable_address3 = variable_get('address3', $config_address3);
+    return $variable_address3;
 }
 
 /**
@@ -187,7 +201,8 @@ function get_address3 () {
  */
 function get_town_city () {
     global $config_town_city;
-    return $config_town_city;
+    $variable_town_city = variable_get('town_city', $config_town_city);
+    return $variable_town_city;
 }
 
 /**
@@ -195,7 +210,8 @@ function get_town_city () {
  */
 function get_zipcode () {
     global $config_zipcode;
-    return $config_zipcode;
+    $variable_zipcode = variable_get('zipcode', $config_zipcode);
+    return $variable_zipcode;
 }
 
 /**
@@ -203,5 +219,6 @@ function get_zipcode () {
  */
 function get_theme () {
     global $config_theme;
-    return $config_theme;
+    $variable_theme = variable_get('theme', $config_theme);
+    return $variable_theme;
 }

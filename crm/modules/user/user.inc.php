@@ -97,7 +97,7 @@ function user_install ($old_revision = 0) {
             }
             $default_perms = array(
                 'member' => array('report_view', 'contact_view')
-                , 'webAdmin' => array('module_upgrade', 'report_view', 'contact_list', 'contact_view', 'contact_add', 'contact_edit', 'contact_delete', 'user_add', 'user_edit', 'user_delete', 'user_role_edit', 'user_permissions_edit')
+                , 'webAdmin' => array('module_upgrade', 'report_view', 'contact_list', 'contact_view', 'contact_add', 'contact_edit', 'contact_delete', 'user_add', 'user_edit', 'user_delete', 'user_role_edit', 'user_permissions_edit', 'global_options_view')
             );
             foreach ($roles as $rid => $role) {
                 if (array_key_exists($role, $default_perms)) {
