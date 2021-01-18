@@ -119,9 +119,11 @@ function email_list_page (&$page_data, $page_name, $options) {
             $contact_data = crm_get_data('contact', array('cid'=>$cid));
             $contact = $contact_data[0];
             // Add email lists tab
-            if (user_access('contact_view') || user_access('contact_edit') || user_access('contact_delete') || $cid == user_id()) {
+            if ((user_access('contact_view') && $cid == user_id()) || user_access('contact_edit')) {
                 $email_lists = theme('table', crm_get_table('email_list_subscriptions', array('cid' => $cid)));
-                $email_lists .= theme('form', crm_get_form('email_list_subscribe', $cid));
+                if ((user_access('contact_view') && $cid == user_id()) || user_access('contact_edit')) {
+                    $email_lists .= theme('form', crm_get_form('email_list_subscribe', $cid));
+                }
                 page_add_content_bottom($page_data, $email_lists, 'Emails');
             }
             break;
@@ -854,7 +856,6 @@ function email_list_edit_form ($lid) {
  * @return The form structure.
  */
 function email_list_delete_form ($lid) {
-    
     // Ensure user is allowed to delete keys
     if (!user_access('email_list_delete')) {
         error_register('User does not have permission: email_list_delete');
