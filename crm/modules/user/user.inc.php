@@ -934,7 +934,16 @@ function command_user_role_update () {
         error_register('Current user does not have permission: user_role_edit');
         return crm_url('members');
     }
+    $roles = user_role_data();
     // Delete all roles for specified user
+    foreach ($roles as $role) {
+        $sql = "
+            DELETE FROM `$role[name]`
+            WHERE `cid`='$esc_post[cid]'
+        ";
+        $res = mysqli_query($db_connect, $sql);
+        if (!$res) { crm_error(mysqli_error($res)); }
+    }
     $sql = "
         DELETE FROM `user_role`
         WHERE `cid`='$esc_post[cid]'
@@ -942,7 +951,6 @@ function command_user_role_update () {
     $res = mysqli_query($db_connect, $sql);
     if (!$res) { crm_error(mysqli_error($res)); }
     // Re-add each role
-    $roles = user_role_data();
     foreach ($roles as $role) {
         if ($_POST[$role['name']]) {
             $esc_rid = mysqli_real_escape_string($db_connect, $role['rid']);
@@ -951,6 +959,14 @@ function command_user_role_update () {
                 (`cid`, `rid`)
                 VALUES
                 ('$esc_post[cid]', '$esc_rid')
+            ";
+            $res = mysqli_query($db_connect, $sql);
+            if (!$res) { crm_error(mysqli_error($res)); }
+            $sql = "
+                INSERT INTO `$role[name]`
+                (`cid`)
+                VALUES
+                ('$esc_post[cid]')
             ";
             $res = mysqli_query($db_connect, $sql);
             if (!$res) { crm_error(mysqli_error($res)); }
