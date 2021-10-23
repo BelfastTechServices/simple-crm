@@ -132,11 +132,13 @@ function member_contact_api ($contact, $op) {
         return $contact;
     }
     $esc_cid = mysqli_real_escape_string($db_connect, $contact['cid']);
-    $esc_address1 = mysqli_real_escape_string($db_connect, $contact['member']['address1']);
-    $esc_address2 = mysqli_real_escape_string($db_connect, $contact['member']['address2']);
-    $esc_address3 = mysqli_real_escape_string($db_connect, $contact['member']['address3']);
-    $esc_town_city = mysqli_real_escape_string($db_connect, $contact['member']['town_city']);
-    $esc_zipcode = mysqli_real_escape_string($db_connect, $contact['member']['zipcode']);
+    $fields = array(
+        'address1', 'address2', 'address3', 'town_city', 'zipcode'
+    );
+    $escaped = array();
+    foreach ($fields as $field) {
+        $escaped[$field] = mysqli_real_escape_string($db_connect, $contact['member'][$field]);
+    }
     switch ($op) {
         case 'create':
             // Add member
@@ -145,7 +147,7 @@ function member_contact_api ($contact, $op) {
                 INSERT INTO `member`
                 (`cid`, `address1`, `address2`, `address3`, `town_city`, `zipcode`)
                 VALUES
-                ('$esc_cid', '$esc_address1', '$esc_address2', '$esc_address3', '$esc_town_city', '$esc_zipcode')
+                ('$esc_cid', '$escaped[address1]', '$escaped[address2]', '$escaped[address3]', '$escaped[town_city]', '$escaped[zipcode]')
             ";
             $res = mysqli_query($db_connect, $sql);
             if (!$res) crm_error(mysqli_error($res));
