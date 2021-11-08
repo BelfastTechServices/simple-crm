@@ -142,7 +142,6 @@ function member_contact_api ($contact, $op) {
     switch ($op) {
         case 'create':
             // Add member
-            $member = $contact['member'];
             $sql = "
                 INSERT INTO `member`
                 (`cid`, `address1`, `address2`, `address3`, `town_city`, `zipcode`)
