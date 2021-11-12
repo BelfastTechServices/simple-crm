@@ -312,6 +312,7 @@ function mentor_table ($opts) {
 function mentor_add_form ($cid) {
     // Ensure user is allowed to edit mentors
     if (!user_access('mentor_edit')) {
+        error_register('User does not have permission: mentor_edit');
         return null;
     }
     // Create form structure
@@ -419,6 +420,7 @@ function mentor_edit_form ($cid) {
 function mentor_delete_form ($cid) {
     // Ensure user is allowed to delete mentors
     if (!user_access('mentor_delete')) {
+        error_register('User does not have permission: mentor_delete');
         return null;
     }
     // Get corresponding contact data
@@ -545,7 +547,7 @@ function command_mentor_delete() {
     // Verify permissions
     if (!user_access('mentor_delete')) {
         error_register('Permission denied: mentor_delete');
-        return crm_url('');
+        return crm_url('contact&cid=' . $_POST['cid']);
     }
     // Query database
     $sql = "
@@ -585,9 +587,11 @@ function mentor_page (&$page_data, $page_name, $options) {
                 return;
             }
             // Add mentors tab
-            if (user_access('mentor_view') || user_access('mentor_edit') || user_access('mentor_delete') || $cid == user_id()) {
+            if (user_access('mentor_view') || $cid == user_id()) {
                 $mentorships = theme('table', crm_get_table('mentor', array('cid' => $cid)));
-                $mentorships .= theme('form', crm_get_form('mentor_add', $cid));
+                if (user_access('mentor_edit')) {
+                    $mentorships .= theme('form', crm_get_form('mentor_add', $cid));
+                }
                 page_add_content_bottom($page_data, $mentorships, 'Mentor');
             }
             break;

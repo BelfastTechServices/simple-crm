@@ -600,8 +600,15 @@ function email_list_options () {
  * @return an email subscribe form structure.
  */
 function email_list_subscribe_form ($cid) {
+    // Ensure user is allowed to edit lists
+    if (!user_access('email_list_subscribe')) {
+        error_register('User does not have permission: email_list_subscribe');
+        return null;
+    }
+    // Get contact data
     $contact_data = crm_get_data('contact', array('cid'=>$cid));
     $contact = $contact_data[0];
+    // Create form structure
     return array(
         'type' => 'form'
         , 'method' => 'post'
@@ -691,6 +698,12 @@ function email_list_unsubscribe_form ($subscription) {
  * @return an email list create form structure.
  */
 function email_list_create_form () {
+    // Ensure user is allowed to edit lists
+    if (!user_access('email_list_edit')) {
+        error_register('User does not have permission: email_list_edit');
+        return null;
+    }
+    // Create form structure
     $form = array(
         'type' => 'form'
         , 'method' => 'post'
@@ -826,6 +839,11 @@ function command_email_list_subscribe () {
     $cid = $_POST['cid'];
     $email = $_POST['email'];
     $lid = $_POST['lid'];
+    // Verify permissions
+    if (!user_access('email_list_subscribe')) {
+        error_register('Permission denied: email_list_subscribe');
+        return crm_url('contact&cid=' . $esc_post['cid']);
+    }
     //TODO: Qualify the email as a valid email.
     if (/* email is valid */ true) {
         //save the email
@@ -842,7 +860,7 @@ function command_email_list_subscribe () {
     } else {
         error_register('Invalid email. Check email syntax.');
     }
-    return crm_url('contact&cid=' . $cid);
+    return crm_url('contact&cid=' . $esc_post['cid']);
 }
 
 /**
@@ -918,7 +936,7 @@ function email_list_page_list () {
 }
 
 /**
- * Page hook.  Adds email_lists module content to a page before it is rendered.
+ * Page hook. Adds email_lists module content to a page before it is rendered.
  * @param &$page_data Reference to data about the page being rendered.
  * @param $page_name The name of the page being rendered.
  */
@@ -935,7 +953,7 @@ function email_list_page (&$page_data, $page_name, $options) {
             // Add email lists tab
             if ((user_access('contact_view') && $cid == user_id()) || user_access('contact_edit')) {
                 $email_lists = theme('table', crm_get_table('email_list_subscriptions', array('cid' => $cid)));
-                if ((user_access('contact_view') && $cid == user_id()) || user_access('contact_edit')) {
+                if ((user_access('email_list_subscribe') && $cid == user_id()) || user_access('email_list_edit_subscription')) {
                     $email_lists .= theme('form', crm_get_form('email_list_subscribe', $cid));
                 }
                 page_add_content_bottom($page_data, $email_lists, 'Emails');
@@ -945,7 +963,9 @@ function email_list_page (&$page_data, $page_name, $options) {
             page_set_title($page_data, 'Email Lists');
             if (user_access('email_list_view')) {
                 $email_lists = theme('table', 'email_list', array('join'=>array('contact', 'member'), 'show_export'=>false, 'lists_only'=>true));
-                $email_lists .= theme('form', crm_get_form('email_list_create'));
+                if (user_access('email_list_edit')) {
+                    $email_lists .= theme('form', crm_get_form('email_list_create'));
+                }
                 page_add_content_top($page_data, $email_lists, 'View');
             }
             break;
@@ -970,7 +990,7 @@ function email_list_page (&$page_data, $page_name, $options) {
             //Set page title
             page_set_title($page_data, email_list_description($lid));
             // Add edit tab
-            if (user_access('email_list_view') || user_access('email_list_edit')) {
+            if (user_access('email_list_edit')) {
                 page_add_content_top($page_data, theme('form', crm_get_form('email_list_edit', $lid), 'Edit'));
                 page_add_content_top($page_data, theme('table', 'email_list_subscribers', array('join'=>array('contact', 'member'), 'show_export'=>false, 'lists_only'=>false, 'lid'=>$lid)));
             }
