@@ -117,52 +117,6 @@ function member_edit_form ($cid) {
     return $form;
 }
 
-// Filters /////////////////////////////////////////////////////////////////////
-
-/**
- * Return the form structure for a member filter.
- * @return The form structure.
- */
-function member_filter_form () {
-    // Available filters    
-    $filters = array(
-        'all' => 'All'
-        , 'active' => 'Active'
-    );
-    // Default filter
-    $selected = empty($_SESSION['member_filter_option']) ? 'all' : $_SESSION['member_filter_option'];
-    // Construct hidden fields to pass GET params
-    $hidden = array();
-    foreach ($_GET as $key => $val) {
-        $hidden[$key] = $val;
-    }
-    $form = array(
-        'type' => 'form'
-        , 'method' => 'get'
-        , 'command' => 'member_filter'
-        , 'hidden' => $hidden
-        , 'fields' => array(
-            array(
-                'type' => 'fieldset'
-                , 'label' => 'Filter'
-                , 'fields' => array(
-                    array(
-                        'type' => 'select'
-                        , 'name' => 'filter'
-                        , 'options' => $filters
-                        , 'selected' => $selected
-                    )
-                    , array(
-                        'type' => 'submit'
-                        , 'value' => 'Filter'
-                    )
-                )
-            )
-        )
-    );
-    return $form;
-}
-
 // Imports /////////////////////////////////////////////////////////////////////
 
 /**

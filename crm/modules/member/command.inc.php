@@ -155,34 +155,6 @@ function command_member_edit () {
 }
 
 /**
- * Handle member filter request.
- * @return The url to display on completion.
- */
-function command_member_filter () {
-    // Set filter in session
-    $_SESSION['member_filter_option'] = $_GET['filter'];
-    // Set filter
-    if ($_GET['filter'] == 'all') {
-        $_SESSION['member_filter'] = array();
-    }
-    if ($_GET['filter'] == 'active') {
-        $_SESSION['member_filter'] = array('active'=>true);
-    }
-    // Construct query string
-    $params = array();
-    foreach ($_GET as $k=>$v) {
-        if ($k == 'command' || $k == 'filter' || $k == 'q') {
-            continue;
-        }
-        $params[] = urlencode($k) . '=' . urlencode($v);
-    }
-    if (!empty($params)) {
-        $query = '&' . join('&', $params);
-    }
-    return crm_url('members') . $query;
-}
-
-/**
  * Handle member import request.
  * @return The url to display on completion.
  */
