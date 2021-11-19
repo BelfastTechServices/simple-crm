@@ -196,14 +196,17 @@ function member_save ($member) {
     }
     if (isset($member['cid'])) {
         // Update member
+        $esc_cid = mysqli_real_escape_string($db_connect, $member['cid']);
+        $clauses = array();
+        foreach ($fields as $m) {
+            if (isset($member[$m]) && $m != 'cid') {
+                $clauses[] = "`$m`='" . mysqli_real_escape_string($db_connect, $member[$m]) . "' ";
+            }
+        }
         $sql = "
             UPDATE `member`
-            SET `address1`='$escaped[address1]'
-                , `address2`='$escaped[address2]'
-                , `address3`='$escaped[address3]'
-                , `town_city`='$escaped[town_city]'
-                , `zipcode`='$escaped[zipcode]'
-            WHERE `cid`='$escaped[cid]'
+            SET " . implode(', ', $clauses) . "
+            WHERE `cid`='$esc_cid'
         ";
         $res = mysqli_query($db_connect, $sql);
         if (!$res) crm_error(mysqli_error($res));
