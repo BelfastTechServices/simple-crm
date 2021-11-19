@@ -26,7 +26,7 @@ $config_email_from = 'customerservice@belfasttechservices.co.uk';
 // The email address to notify when a user is created
 $config_email_to = 'chris@belfasttechservices.co.uk';
 
-// The postal address of the space (used when sending out new member emails)
+// The postal address of the organisation (used when sending out new user emails)
 $config_address1 = '';
 $config_address2 = '';
 $config_address3 = '';
