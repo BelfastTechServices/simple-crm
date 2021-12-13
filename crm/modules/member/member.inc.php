@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @return This module's revision number.  Each new release should increment
+ * @return This module's revision number. Each new release should increment
  * this number.
  */
 function member_revision () {

@@ -3,7 +3,7 @@
 // Installation functions //////////////////////////////////////////////////////
 
 /**
- * @return This module's revision number.  Each new release should increment
+ * @return This module's revision number. Each new release should increment
  * this number.
  */
 function mentor_revision () {
