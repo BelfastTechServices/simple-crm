@@ -19,25 +19,6 @@ function theme_member_email_report ($opts) {
 }
 
 /**
- * Return the themed html for a contact's name.
- * @param $cid The cid of the contact.
- * @return The themed html string.
- */
-function theme_member_contact_name ($cid) {
-    // Get member data
-    $data = member_data(array('cid' => $cid));
-    if (count($data) < 1) {
-        return '';
-    }
-    $output = member_name(
-        $data[0]['contact']['firstName']
-        , $data[0]['contact']['middleName']
-        , $data[0]['contact']['lastName']
-    );
-    return $output;
-}
-
-/**
  * Return the text of an email notifying administrators that a user has been created.
  * @param $cid The contact id of the new member.
  */
