@@ -64,8 +64,8 @@ function member_add_form () {
 function member_edit_form ($cid) {
     // Create form
     if ($cid) {
-        $memb_data = crm_get_data('member', array('cid'=>$cid));
-        $member = $memb_data[0]['member'];
+        $member_data = crm_get_data('member', array('cid'=>$cid));
+        $member = $member_data[0]['member'];
     }
     $form = array(
         'type' => 'form'
