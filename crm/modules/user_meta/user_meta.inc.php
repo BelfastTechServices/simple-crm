@@ -48,8 +48,8 @@ function user_meta_install($old_revision = 0) {
             , '3' => 'webAdmin'
         );
         $default_perms = array(
-            'webAdmin' => array('user_meta_view', 'user_meta_edit', 'user_meta_delete')
-            , 'member' => array('user_meta_view')
+            'member' => array('user_meta_view')
+            , 'webAdmin' => array('user_meta_view', 'user_meta_edit', 'user_meta_delete')
         );
         foreach ($roles as $rid => $role) {
             $esc_rid = mysqli_real_escape_string($db_connect, $rid);
@@ -95,7 +95,7 @@ function user_meta_description ($umid) {
 /**
  * Return data for one or more meta-tag assignments.
  * @param $opts An associative array of options, possible metas are:
- * 'umid' If specified, returns a single memeber with the matching meta id;
+ * 'umid' If specified, returns a single member with the matching meta id;
  * 'cid' If specified, returns all metas assigned to the contact with specified id;
  * 'filter' An array mapping filter names to filter values;
  * 'join' A list of tables to join to the meta table.
@@ -193,7 +193,7 @@ function user_meta_data ($opts = array()) {
                 $user_meta['contact'] = $cidToContact[$row['cid']];
             }
         }
-        if ($join_contact) {
+        if ($join_member) {
             if (array_key_exists($row['cid'], $cidToMember)) {
                 $user_meta['member'] = $cidToMember[$row['cid']];
             }
