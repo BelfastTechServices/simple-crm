@@ -57,15 +57,10 @@ function email_list_install ($old_revision = 0) {
         $roles = array(
             '1' => 'authenticated'
             , '2' => 'member'
-            , '3' => 'director'
-            , '4' => 'president'
-            , '5' => 'vp'
-            , '6' => 'secretary'
-            , '7' => 'treasurer'
-            , '8' => 'webAdmin'
+            , '3' => 'webAdmin'
         );
         $default_perms = array(
-            'director' => array('email_list_view', 'email_list_edit', 'email_list_delete', 'email_list_subscribe', 'email_list_unsubscribe', 'email_list_edit_subscription')
+            'member' => array('email_list_unsubscribe')
             , 'webAdmin' => array('email_list_view', 'email_list_edit', 'email_list_delete', 'email_list_subscribe', 'email_list_unsubscribe', 'email_list_edit_subscription')
         );
         foreach ($roles as $rid => $role) {
@@ -470,9 +465,7 @@ function email_list_subscriptions_table ($opts) {
         $table['columns'][] = array("title"=>'Name', 'class'=>'', 'id'=>'');
         $table['columns'][] = array("title"=>'Email', 'class'=>'', 'id'=>'');
         $table['columns'][] = array("title"=>'List', 'class'=>'', 'id'=>'');
-    }
-    // Add ops column
-    if (!$export && (user_access('contact_edit') || user_access('contact_delete'))) {
+        // Add ops column
         $table['columns'][] = array('title'=>'Ops','class'=>'');
     }
     // Add rows
@@ -550,9 +543,8 @@ function email_list_subscribers_table ($opts) {
         }
         $table['columns'][] = array("title"=>'Name', 'class'=>'', 'id'=>'');
         $table['columns'][] = array("title"=>'Email', 'class'=>'', 'id'=>'');
-    }
-    // Add ops column
-    if (!$export && (user_access('contact_edit') || user_access('contact_delete'))) {
+        $table['columns'][] = array("title"=>'List', 'class'=>'', 'id'=>'');
+        // Add ops column
         $table['columns'][] = array('title'=>'Ops','class'=>'');
     }
     // Add rows
@@ -567,6 +559,7 @@ function email_list_subscribers_table ($opts) {
             }
             $row[] = theme('contact_name', $cid_to_contact[$subscription['cid']], !$export);
             $row[] = $subscription['email'];
+            $row[] = $subscription['list_name'];
         }
         if (!$export && (user_access('email_list_unsubscribe'))) {
             // Construct ops array
@@ -988,10 +981,10 @@ function email_list_page (&$page_data, $page_name, $options) {
                 return;
             }
             page_set_title($page_data, 'Email Lists');
-                if (user_access('email_list_unsubscribe')) {
-                    $email_lists = theme('form', crm_get_form('email_list_unsubscribe', array('cid'=>$cid, 'lid'=>$lid)));
-                    page_add_content_top($page_data, $email_lists);
-                }
+            if (user_access('email_list_unsubscribe')) {
+                $email_lists = theme('form', crm_get_form('email_list_unsubscribe', array('cid'=>$cid, 'lid'=>$lid)));
+                page_add_content_top($page_data, $email_lists);
+            }
             break;
         case 'email_list':
             $lid = $options['lid'];
