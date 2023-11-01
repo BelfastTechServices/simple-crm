@@ -66,6 +66,9 @@ $config_modules[] = "profile_picture";
 // Developer tools
 //$config_modules[] = "devel";
 
+// Email list management
+$config_modules[] = "email_list";
+
 // Links to show in the main menu
 $config_links = array(
     '<front>' => 'Home'
