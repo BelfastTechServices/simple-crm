@@ -55,6 +55,7 @@ $config_modules = array(
     "contact"
     , "user"
     , "variable"
+    , "member"
 );
 
 // Optional modules, uncomment to enable
