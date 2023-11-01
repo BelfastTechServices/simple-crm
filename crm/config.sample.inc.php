@@ -60,6 +60,9 @@ $config_modules = array(
 
 // Optional modules, uncomment to enable
 
+// Assign a profile picture using gravatar
+$config_modules[] = "profile_picture";
+
 // Developer tools
 //$config_modules[] = "devel";
 
