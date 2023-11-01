@@ -46,6 +46,9 @@ function core_page (&$page_data, $page_name, $options) {
         case 'install':
             page_add_content_top($page_data, theme('form', crm_get_form('module_install')));
             break;
+        case 'register':
+            page_add_content_top($page_data, theme('form', crm_get_form('register_member')));
+            break;
         case 'login':
             page_add_content_top($page_data, theme('form', crm_get_form('login')));
             break;
