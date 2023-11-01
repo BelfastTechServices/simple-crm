@@ -60,6 +60,9 @@ $config_modules = array(
 
 // Optional modules, uncomment to enable
 
+// Track user meta data
+$config_modules[] = "user_meta";
+
 // Assign a profile picture using gravatar
 $config_modules[] = "profile_picture";
 
