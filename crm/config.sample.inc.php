@@ -66,6 +66,9 @@ $config_modules[] = "profile_picture";
 // Track user meta data
 $config_modules[] = "user_meta";
 
+// Assign members a mentor
+$config_modules[] = "mentor";
+
 // Email list management
 $config_modules[] = "email_list";
 
