@@ -58,6 +58,11 @@ $config_modules = array(
     , "member"
 );
 
+// Optional modules, uncomment to enable
+
+// Assign a profile picture using gravatar
+$config_modules[] = "profile_picture";
+
 // Links to show in the main menu
 $config_links = array(
     '<front>' => 'Home'
