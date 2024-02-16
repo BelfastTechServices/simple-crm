@@ -63,6 +63,9 @@ $config_modules = array(
 // Assign a profile picture using gravatar
 $config_modules[] = "profile_picture";
 
+// Track user meta data
+$config_modules[] = "user_meta";
+
 // Email list management
 $config_modules[] = "email_list";
 
@@ -70,6 +73,7 @@ $config_modules[] = "email_list";
 $config_links = array(
     '<front>' => 'Home'
     , 'members' => 'Members'
+    , 'user_metas' => 'User Meta Data'
     , 'email_lists' => 'Email Lists'
     , 'reports' => 'Reports'
     , 'permissions' => 'Permissions'
