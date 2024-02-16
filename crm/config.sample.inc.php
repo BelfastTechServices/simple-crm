@@ -66,6 +66,9 @@ $config_modules[] = "user_meta";
 // Assign a profile picture using gravatar
 $config_modules[] = "profile_picture";
 
+// Assign members a mentor
+$config_modules[] = "mentor";
+
 // Email list management
 $config_modules[] = "email_list";
 
