@@ -55,11 +55,13 @@ $config_modules = array(
     "contact"
     , "user"
     , "variable"
+    , "member"
 );
 
 // Links to show in the main menu
 $config_links = array(
     '<front>' => 'Home'
+    , 'members' => 'Members'
     , 'reports' => 'Reports'
     , 'permissions' => 'Permissions'
     , 'global_options' => 'Global Options'
