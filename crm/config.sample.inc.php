@@ -72,6 +72,9 @@ $config_modules[] = "mentor";
 // Developer tools
 //$config_modules[] = "devel";
 
+// User self-registration
+//$config_modules[] = "register";
+
 // Email list management
 $config_modules[] = "email_list";
 
