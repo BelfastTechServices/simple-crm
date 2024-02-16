@@ -63,10 +63,14 @@ $config_modules = array(
 // Assign a profile picture using gravatar
 $config_modules[] = "profile_picture";
 
+// Email list management
+$config_modules[] = "email_list";
+
 // Links to show in the main menu
 $config_links = array(
     '<front>' => 'Home'
     , 'members' => 'Members'
+    , 'email_lists' => 'Email Lists'
     , 'permissions' => 'Permissions'
     , 'global_options' => 'Global Options'
     , 'upgrade' => 'Upgrade'
