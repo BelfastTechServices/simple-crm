@@ -69,6 +69,9 @@ $config_modules[] = "user_meta";
 // Assign members a mentor
 $config_modules[] = "mentor";
 
+// Developer tools
+//$config_modules[] = "devel";
+
 // Email list management
 $config_modules[] = "email_list";
 
