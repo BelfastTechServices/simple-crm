@@ -289,7 +289,7 @@ function email_list_delete ($list) {
     ";
     $res = mysqli_query($db_connect, $sql);
     if (!$res) crm_error(mysqli_error($db_connect));
-    if (mysqli_affected_rows() > 0) {
+    if (mysqli_affected_rows($db_connect) > 0) {
         message_register('List deleted.');
     }
     //delete any subscriptions that are associated with this list.
@@ -299,7 +299,7 @@ function email_list_delete ($list) {
     ";
     $res = mysqli_query($db_connect, $sql);
     if (!$res) crm_error(mysqli_error($db_connect));
-    if (mysqli_affected_rows() > 0) {
+    if (mysqli_affected_rows($db_connect) > 0) {
         message_register('Associated subscriptions deleted.');
     }
 }
@@ -343,9 +343,9 @@ function email_list_unsubscribe ($subscription) {
     ";
     $res = mysqli_query($db_connect, $sql);
     if (!$res) crm_error(mysqli_error($db_connect));
-    if (mysqli_affected_rows() > 0) {
+    if (mysqli_affected_rows($db_connect) > 0) {
         message_register('Subscription deleted.');
-    } if (mysqli_affected_rows() > 1){
+    } if (mysqli_affected_rows($db_connect) > 1){
         error_register("More than one subscription was deleted. This shouldn't happen
                        under normal circumstances. Please make sure your database is okay!");
     }
