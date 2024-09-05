@@ -8,7 +8,7 @@ simple-crm web app
 ```
 sudo mysql -u root
 CREATE DATABASE `simple-crm` CHARACTER SET utf8 COLLATE utf8_general_ci;
-CREATE USER 'simple-crm'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+CREATE USER 'simple-crm'@'localhost' IDENTIFIED WITH caching_sha2_password BY '';
 GRANT ALL PRIVILEGES ON `simple-crm` . * TO 'simple-crm'@'localhost';
 FLUSH PRIVILEGES;
 quit
