@@ -27,11 +27,11 @@ $config_email_from = 'customerservice@belfasttechservices.co.uk';
 $config_email_to = 'chris@belfasttechservices.co.uk';
 
 // The postal address of the organization (used when sending out new user emails)
-$config_address1 = '';
-$config_address2 = '';
+$config_address1 = 'Unit 1 Weavers Court';
+$config_address2 = 'Linfield Road';
 $config_address3 = '';
-$config_town_city = '';
-$config_zipcode = '';
+$config_town_city = 'Belfast';
+$config_zipcode = 'BT12 5GH';
 
 // The hostname of the server
 $config_host = $_SERVER['SERVER_NAME'];
